@@ -1,0 +1,318 @@
+# ProofPath — Architecture & Engineering Specification
+
+> **Core Principle:** `NO EVIDENCE → NO CLAIM`
+
+---
+
+## 1. Phase 1 Purpose & Product Vision
+
+ProofPath determines which technical skills of a software engineer can **actually be substantiated by evidence found in their public source code**.
+
+Traditional resumes and GitHub profile summaries rely on unverified self-assertions or shallow README mentions. ProofPath replaces subjective claims with **deterministic, traceable code-level evidence**.
+
+Phase 1 implements the complete **Proof Extraction Engine**:
+- Ingests public GitHub profiles and repositories.
+- Discovers file trees and filters out binaries, dependencies, and irrelevant artifacts.
+- Deterministically parses source code ASTs, manifests, and framework patterns.
+- Evaluates code signals against an extensible, data-driven skill taxonomy.
+- Computes calibrated evidence strengths (Level 0 through Level 5) with source-location traceability.
+- Emits structured Evidence JSON ready for Phase 2 career reasoning and role evaluation.
+
+---
+
+## 2. High-Level Architecture
+
+```text
+               ┌───────────────────────┐
+               │    GitHub Username    │
+               └───────────┬───────────┘
+                           │
+                           ▼
+               ┌───────────────────────┐
+               │    GitHub Service     │
+               └───────────┬───────────┘
+                           │
+                           ▼
+               ┌───────────────────────┐
+               │  Repository Collector │
+               └───────────┬───────────┘
+                           │
+                           ▼
+               ┌───────────────────────┐
+               │   File Prioritizer    │
+               └───────────┬───────────┘
+                           │
+         ┌─────────────────┼─────────────────┐
+         ▼                 ▼                 ▼
+   Python AST        JS / TS Parser      Dependency
+    Analyzer            Analyzer          Analyzer
+         │                 │                 │
+         └─────────────────┼─────────────────┘
+                           │
+                           ▼
+               ┌───────────────────────┐
+               │   Framework Engine    │
+               └───────────┬───────────┘
+                           │
+                           ▼
+               ┌───────────────────────┐
+               │    Skill Detector     │
+               └───────────┬───────────┘
+                           │
+                           ▼
+               ┌───────────────────────┐
+               │    Evidence Engine    │
+               │ (Strength & Location) │
+               └───────────┬───────────┘
+                           │
+                           ▼
+               ┌───────────────────────┐
+               │ Structured Evidence   │
+               │         JSON          │
+               └───────────────────────┘
+```
+
+---
+
+## 3. GitHub API Flow & Repository Collection
+
+The `GitHubService` communicates with the GitHub REST API (`api.github.com`):
+1. **Profile Fetch:** `GET /users/{username}` retrieves account metadata (`login`, `name`, `bio`, `avatar_url`, `public_repos`, `html_url`).
+2. **Repository Fetch:** `GET /users/{username}/repos` fetches public, non-fork repositories sorted by recent updates.
+3. **Git Trees API:** `GET /repos/{owner}/{repo}/git/trees/{branch}?recursive=1` retrieves repository directory hierarchies in a single HTTP request without downloading entire archives.
+4. **File Content:** Raw file contents are fetched selectively via the GitHub Contents API / Raw endpoints with strict size cutoffs.
+
+### Resiliency & Limits
+- **Authentication:** Reads `GITHUB_TOKEN` from environment variables if configured (elevates rate limits from 60 to 5,000 requests/hour).
+- **HTTP Timeouts:** Enforces configurable HTTP timeouts (default: 15.0s).
+- **Graceful Error Handling:** Translates 404 into `GitHubUserNotFoundError`, 403 into `GitHubRateLimitError`, and network issues into `GitHubAPIError`.
+
+---
+
+## 4. File Filtering & Security Model
+
+Repository code is **untrusted external input**.
+
+### Strict Security Rules
+- **NEVER EXECUTE:** ProofPath never executes repository code, shell scripts, Python files, or package install commands (`pip install`, `npm install`).
+- **READ-ONLY PARSING:** Analysis is strictly static (AST traversal, lexical tokenization, and JSON/TOML parsing).
+
+### Ignored Directories
+The following directories are pruned before content fetching:
+- Version control: `.git/`, `.github/`
+- Dependencies: `node_modules/`, `venv/`, `.venv/`, `env/`, `vendor/`
+- Build outputs: `dist/`, `build/`, `.next/`, `target/`, `out/`, `bin/`, `obj/`
+- Cache & metadata: `__pycache__/`, `coverage/`, `.idea/`, `.vscode/`, `.pytest_cache/`, `.mypy_cache/`
+
+### Ignored Files & Binaries
+- Images & Media: `.png`, `.jpg`, `.jpeg`, `.gif`, `.webp`, `.svg`, `.mp3`, `.mp4`, `.mov`, `.wav`
+- Compiled Binaries & Archives: `.zip`, `.tar`, `.gz`, `.exe`, `.dll`, `.so`, `.bin`, `.pyc`
+- Minified Code: `*.min.js`, `*.min.css`, `bundle.js`, `*.map`
+- Documents & Fonts: `.pdf`, `.docx`, `.woff`, `.woff2`, `.ttf`
+
+### Prioritization Hierarchy
+1. **Manifests & Dependencies:** `requirements.txt`, `pyproject.toml`, `Pipfile`, `package.json`, `Dockerfile`
+2. **Key Source Code:** `.py`, `.ipynb`, `.ts`, `.tsx`, `.js`, `.jsx`, `.sql`
+3. **Documentation:** `README.md`
+4. **Config:** `.yaml`, `.yml`
+
+---
+
+## 5. Analyzers
+
+### 5.1 Python Analyzer (`PythonAnalyzer`)
+- Uses Python's native `ast` module (no crude regex keyword guessing).
+- Handles standard `.py` files and Jupyter notebooks (`.ipynb`) by extracting code cells.
+- Extracts:
+  - Import statements (`import torch`, `from torch import nn`)
+  - Class definitions and base class inheritance (`class Model(nn.Module)`)
+  - Function and async function definitions
+  - Decorators (FastAPI `@app.get`, `@router.post`, Flask `@app.route`)
+  - Method calls (`loss.backward()`, `optimizer.step()`, `DataLoader()`, `model.fit()`, `pd.read_csv()`)
+  - Composite patterns (e.g., PyTorch training loops matching forward + backward + optimizer steps)
+- Captures exact start and end line numbers (`line_start`, `line_end`).
+- Catches syntax errors gracefully without failing overall analysis.
+
+### 5.2 JavaScript / TypeScript Analyzer (`JavaScriptAnalyzer`)
+- Analyzes `.js`, `.jsx`, `.ts`, `.tsx`, `.mjs`, `.cjs`.
+- Detects:
+  - React imports and components (`React.FC`, function components, class components)
+  - React hooks (`useState`, `useEffect`, `useContext`, `useMemo`, `useCallback`)
+  - JSX syntax elements (`<div`, `<Component`)
+  - Express.js route handlers (`app.get`, `router.post`)
+  - Node.js APIs (`require('fs')`, `process.env`, `http.createServer`)
+  - TypeScript constructs (`interface`, `type`, `enum`, generics, type annotations)
+  - `async/await`, `fetch`, and `axios` HTTP calls
+
+### 5.3 Dependency Analyzer (`DependencyAnalyzer`)
+- Parses dependency manifests (`requirements.txt`, `pyproject.toml`, `Pipfile`, `package.json`, `package-lock.json`, `yarn.lock`, `Dockerfile`).
+- Normalizes package names to canonical technologies (e.g., `torch` → `PyTorch`, `fastapi` → `FastAPI`).
+- Classifies signals with type `dependency` (strength 2).
+
+### 5.4 Framework Analyzer (`FrameworkAnalyzer`)
+- Parses `.sql` files to extract relational statements (`SELECT`, `INSERT`, `CREATE TABLE`, `JOIN`).
+- Scans `README.md` files to extract declared mentions (strength 1).
+
+---
+
+## 6. Skill Taxonomy (`data/skills.json`)
+
+The skill catalog is **data-driven and externalized**:
+```json
+{
+  "skills": [
+    {
+      "name": "PyTorch",
+      "category": "Machine Learning",
+      "signals": ["torch", "torch.nn", "torch.nn.Module", "torch.optim", "DataLoader", "loss.backward", "optimizer.step"],
+      "dependencies": ["torch", "torchvision", "torchaudio"],
+      "file_extensions": [".py", ".ipynb"],
+      "parent_skills": ["Python", "Deep Learning", "Machine Learning"]
+    }
+  ]
+}
+```
+
+Includes baseline definitions for:
+`Python`, `JavaScript`, `TypeScript`, `React`, `Node.js`, `FastAPI`, `Flask`, `Django`, `PyTorch`, `TensorFlow`, `Scikit-learn`, `Pandas`, `NumPy`, `SQL`, `Git`, `Docker`, `OpenCV`, `Transformers`, `Machine Learning`, `Deep Learning`, `REST API`, `Data Analysis`.
+
+---
+
+## 7. Evidence Levels & Scoring Model
+
+ProofPath measures **substantiated ability**, not repository popularity:
+- Stars, forks, repository age, and commit frequency are **never** used as skill proof.
+
+| Level | Evidence Type | Description | Example |
+| :---: | :--- | :--- | :--- |
+| **0** | None | No evidence detected in source code or metadata | Technology not present in repo |
+| **1** | Mentioned | Technology claimed in documentation only | `README.md: "Built with PyTorch"` |
+| **2** | Dependency | Technology declared in dependencies, but not in code | `requirements.txt: torch>=2.0.0` |
+| **3** | Implementation | Direct source code usage (imports, simple calls) | `import torch; x = torch.tensor(...)` |
+| **4** | Applied | Meaningful integration across components | `nn.Module` + `DataLoader` + training loop |
+| **5** | Production | Applied integration + tests, CI/CD, or containerization | Applied code + `pytest` suite + `Dockerfile` |
+
+### Status Classification
+- **Proven:** Strength 4 to 5
+- **Partial:** Strength 2 to 3
+- **Missing:** Strength 0 to 1
+
+---
+
+## 8. Evidence Traceability & Schema
+
+Every skill claim in ProofPath is accountable:
+```text
+Skill (e.g. PyTorch)
+  └── Repository (e.g. vision-model)
+        └── File (e.g. train.py)
+              └── Lines (e.g. 5–32)
+                    └── Signals (e.g. torch.nn.Module, DataLoader, optimizer.step)
+                          └── Strength: 4 (Proven)
+```
+
+### JSON Schema Output (`AnalyzeResponse`)
+```json
+{
+  "username": "coder",
+  "profile": {
+    "login": "coder",
+    "name": "Alex Coder",
+    "bio": "ML Engineer",
+    "avatar_url": "https://avatars.githubusercontent.com/u/123",
+    "public_repositories": 12,
+    "html_url": "https://github.com/coder"
+  },
+  "repositories_analyzed": 5,
+  "repositories": [
+    {
+      "name": "vision-model",
+      "full_name": "coder/vision-model",
+      "description": "Image classifier",
+      "html_url": "https://github.com/coder/vision-model",
+      "language": "Python",
+      "stars": 15,
+      "forks": 2,
+      "default_branch": "main",
+      "files_analyzed": 14
+    }
+  ],
+  "skills": [
+    {
+      "skill": "PyTorch",
+      "category": "Machine Learning",
+      "status": "proven",
+      "strength": 4,
+      "evidence": [
+        {
+          "skill": "PyTorch",
+          "status": "proven",
+          "repository": "vision-model",
+          "file": "train.py",
+          "line_start": 5,
+          "line_end": 32,
+          "signals": ["torch.nn.Module", "DataLoader", "loss.backward", "optimizer.step"],
+          "evidence_type": "applied",
+          "strength": 4,
+          "explanation": "PyTorch is applied meaningfully in train.py via torch.nn.Module, DataLoader, loss.backward, optimizer.step."
+        }
+      ]
+    }
+  ],
+  "proven": ["Python", "PyTorch", "Deep Learning", "Machine Learning"],
+  "partial": ["SQL"],
+  "missing": ["Docker", "FastAPI"],
+  "evidence": [...]
+}
+```
+
+---
+
+## 9. API Specifications
+
+### `POST /api/github/analyze`
+- **Request Body:**
+  ```json
+  {
+    "username": "octocat",
+    "max_repos": 5
+  }
+  ```
+- **Response:** `200 OK` with full `AnalyzeResponse` JSON.
+- **Errors:**
+  - `404 Not Found`: GitHub user does not exist.
+  - `429 Too Many Requests`: GitHub API rate limit reached.
+  - `502 Bad Gateway`: GitHub connection error.
+
+### `GET /api/github/profile/{username}`
+- **Response:** `200 OK` with user profile and repository listing.
+
+### `GET /health`
+- **Response:** `200 OK` with service health status.
+
+---
+
+## 10. Phase 2 Integration Contract
+
+In Phase 2, the **Evidence JSON** generated by Phase 1 will be fed directly to the Gemma reasoning model.
+
+```text
+┌───────────────────────┐
+│     Phase 1 Output    │
+│  (Evidence JSON)      │
+└───────────┬───────────┘
+            │  (No re-scraping of GitHub needed)
+            ▼
+┌───────────────────────┐
+│     Phase 2 Gemma     │
+│   Reasoning Engine    │
+└───────────┬───────────┘
+            ▼
+┌───────────────────────┐
+│ • Role Readiness Gap  │
+│ • Custom Tech Quizzes │
+│ • Targeted Missions   │
+└───────────────────────┘
+```
+
+The Phase 1 output guarantees complete traceability: Gemma will refer to verified physical files and line numbers rather than hallucinating skill claims.
