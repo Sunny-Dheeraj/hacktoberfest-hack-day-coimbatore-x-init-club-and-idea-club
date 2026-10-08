@@ -404,3 +404,101 @@ If Gemma 4 credentials are unconfigured, network timeouts occur, or rate limits 
 - **`GET /api/analysis/roles`**: Lists all available roles with requirement counts.
 - **`GET /api/analysis/roles/{role_id}`**: Retrieves complete role definition with skill weights.
 
+---
+
+## 12. Phase 3: Proof & Progress Architecture
+
+Phase 3 introduces the learning and verification loop, moving beyond passive evaluation to active skill progression and verified mastery.
+
+### Tri-Pillar Skill Confidence Model
+
+ProofPath measures true technical confidence through three calibrated pillars:
+$$\text{Skill Confidence} = (\text{Code Evidence} \times 0.40) + (\text{Knowledge Quiz} \times 0.30) + (\text{Practical Ability} \times 0.30)$$
+
+1. **Code Evidence (40%):** Derived deterministically from Phase 1 source code traces and calibrated strength levels (0–5).
+2. **Knowledge Quiz (30%):** Tested via conceptual multiple-choice and snippet-based code reasoning questions.
+3. **Practical Ability (30%):** Proved through Monaco Editor static coding challenges and GitHub repository practical missions.
+
+### Three Dimensions of Quizzes
+
+To distinguish shallow memorization from true engineering capability, ProofPath quizzes evaluate across three dimensions:
+1. **Conceptual Knowledge:** "Do you know the principle?" (Multiple-choice conceptual questions).
+2. **Code Reasoning:** "Can you read and reason about code using it?" (Snippet analysis and output prediction).
+3. **Code Implementation:** "Can you actually write working code?" (Monaco Editor implementation challenge).
+
+### Static Code Evaluation & Security Model
+
+- **Zero Arbitrary Execution:** ProofPath strictly avoids `eval()`, `exec()`, or subshell execution.
+- **Deterministic Static Evaluation:**
+  - **Python:** AST tree traversal checks function definitions, inheritance, return statements, and syntax validity.
+  - **JavaScript/TypeScript:** Regex and lexical token checks for components, JSX, array transformations, and event bindings.
+  - **SQL:** Structural query verification for SELECT, GROUP BY, HAVING, and JOINs.
+  - **Dockerfile:** Instruction inspection for FROM, WORKDIR, COPY, and CMD.
+
+### Practical Missions & Static GitHub Verification
+
+Practical tasks require students to create actual GitHub repositories:
+- Evaluated via `VerificationService` reusing Phase 1's `GitHubService` and AST analyzers.
+- Statically verifies directory structure, required artifact files (`Dockerfile`, `App.tsx`, `train.py`), and technical code signals.
+- Returns deterministic statuses: `verified` (100%), `partially_verified` (50%), or `not_verified` (0%).
+
+### Data Persistence Layer
+
+Lightweight SQLite + SQLAlchemy storage tracks:
+- `UserProfileRecord`: Target roles and settings.
+- `SkillProgressRecord`: Composite confidence metrics (40/30/30).
+- `QuizAttemptRecord`: Knowledge and reasoning answers.
+- `CodeChallengeAttemptRecord`: Monaco editor submissions.
+- `TaskAttemptRecord`: GitHub mission verification results.
+
+---
+
+## 13. Phase 4: Career Readiness Platform (Frontend)
+
+Phase 4 provides a responsive web application built with **React, Vite, Tailwind CSS, Lucide icons, and Monaco Editor**.
+
+### UI Aesthetic & Principles
+
+- **Flat, Minimal, Clean:** Inspired by Linear and GitHub developer tools.
+- **No Gimmicks:** Avoids bloated gradients, glassmorphism, or gaming visuals.
+- **Dark & Light Mode:** Accessible theme toggle persisting user preference in `localStorage`.
+- **Monaco Code Editor:** Interactive code editing with syntax highlighting, line numbers, and instant static evaluation.
+
+### End-to-End User Journey
+
+```text
+Landing / Input GitHub Username (@torvalds) & Role (ML Engineer)
+                    │
+                    ▼
+Deterministic Proof Extraction & Career Matching
+                    │
+                    ▼
+Interactive Dashboard (Readiness Score & 0-5 Skill Cards)
+                    │
+          ┌─────────┴─────────┐
+          ▼                   ▼
+Evidence Explorer       Next Best Action
+(Exact File/Lines)      (e.g., Docker Quiz)
+          │                   │
+          │                   ▼
+          │         3-Dimension Assessment
+          │         (Knowledge -> Reasoning -> Monaco Editor)
+          │                   │
+          │                   ▼
+          │         Deterministic Evaluation (AST Criteria)
+          │                   │
+          │                   ▼
+          │         Practical Mission Briefing
+          │                   │
+          │                   ▼
+          │         Submit GitHub Repo (e.g., user/docker-api)
+          │                   │
+          │                   ▼
+          │         Static Verification (100% Verified)
+          │                   │
+          └───────────────────┼───────────────────┐
+                              ▼                   ▼
+                  Updated Tri-Pillar Progress   Next Action
+```
+
+
