@@ -102,10 +102,25 @@ async def analyze_career_readiness(request: CareerAnalysisRequest):
         )
 
     # Step 2: Execute Deterministic Career Role Matching
+    total_public = (
+        getattr(phase1_result.profile, "public_repositories", None)
+        or getattr(phase1_result.profile, "public_repos", None)
+        or len(phase1_result.repositories)
+    ) if phase1_result.profile else len(phase1_result.repositories)
+    coverage_text = (
+        f"Analyzed {phase1_result.repositories_analyzed} of {total_public} public repositories "
+        "(excluding forked and binary/non-code repositories)."
+    )
+
     career_result = career_service.analyze_career(
         username=request.username,
         skill_summaries=phase1_result.skills,
         role_ids=request.role_ids,
+        profile=phase1_result.profile,
+        repositories=phase1_result.repositories,
+        repositories_analyzed=phase1_result.repositories_analyzed,
+        total_public_repos=total_public,
+        coverage_summary=coverage_text,
     )
 
     # Step 3: AI Interpretation via Gemma 4 (or deterministic fallback)
@@ -136,6 +151,9 @@ async def analyze_career_readiness(request: CareerAnalysisRequest):
                 role_analysis.ai_insight = fallback
 
     # Step 4: Assemble response
+    profile_dict = phase1_result.profile.model_dump() if phase1_result.profile else None
+    repos_list = [r.model_dump() for r in phase1_result.repositories]
+
     return CareerAnalysisResponse(
         username=request.username,
         roles_analyzed=len(career_result.roles_analyzed),
@@ -145,4 +163,9 @@ async def analyze_career_readiness(request: CareerAnalysisRequest):
         phase1_evidence_count=len(phase1_result.evidence),
         ai_available=gemma_service.is_configured(),
         metadata=career_result.analysis_metadata,
+        profile=profile_dict,
+        repositories=repos_list,
+        repositories_analyzed=phase1_result.repositories_analyzed,
+        total_public_repos=total_public,
+        coverage_summary=coverage_text,
     )

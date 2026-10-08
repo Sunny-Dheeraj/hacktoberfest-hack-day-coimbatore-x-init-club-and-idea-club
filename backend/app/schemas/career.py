@@ -49,6 +49,11 @@ class CareerAnalysisResponse(BaseModel):
     phase1_evidence_count: int = 0
     ai_available: bool = False
     metadata: dict = Field(default_factory=dict)
+    profile: Optional[dict] = None
+    repositories: List[dict] = Field(default_factory=list)
+    repositories_analyzed: int = 0
+    total_public_repos: int = 0
+    coverage_summary: str = ""
 
 
 class RolesListResponse(BaseModel):

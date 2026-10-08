@@ -125,6 +125,7 @@ class LearningService:
             is_core = name in core_names
             status = "missing" if name in missing_set else ("partial" if name in partial_set else "proven")
             res_list = self.get_resources_for_skill(name)
+            guidance = self.generate_personalized_guidance(name, role_title, status)
             ordered_skills.append({
                 "step": step,
                 "skill": name,
@@ -133,6 +134,7 @@ class LearningService:
                 "priority_label": "High Priority" if (is_core and status != "proven") else "Medium Priority",
                 "resources_count": len(res_list),
                 "primary_resource": res_list[0].model_dump() if res_list else None,
+                "guidance": guidance,
             })
             step += 1
 
@@ -143,3 +145,39 @@ class LearningService:
             ordered_skills=ordered_skills,
             total_estimated_time=f"{len(ordered_skills) * 3} hours",
         )
+
+    def generate_personalized_guidance(self, skill: str, role_title: str, status: str) -> dict:
+        """Generates structured 9-point career guidance for bridging skill gaps."""
+        if status == "missing":
+            return {
+                "why": f"{skill} is a critical core competency for {role_title}.",
+                "current_proof": "No physical code evidence detected in analyzed public repositories.",
+                "gap": f"Missing source files, imports, and practical tests implementing {skill}.",
+                "learn": f"Start with official {skill} documentation and structured tutorials.",
+                "build": f"Construct a clean, modular repository implementing {skill} features.",
+                "test": f"Complete the {skill} conceptual and reasoning assessment.",
+                "verify": f"Submit your GitHub repository for automated AST verification.",
+                "next": f"Advance {skill} from Missing to Proven to significantly boost role readiness.",
+            }
+        elif status == "partial":
+            return {
+                "why": f"{skill} is required at production-grade depth for {role_title}.",
+                "current_proof": f"Detected configuration, package manifest, or shallow usage of {skill}.",
+                "gap": "Lacks comprehensive test suites, advanced API integration, or Docker containerization.",
+                "learn": f"Review intermediate architecture and best practices for {skill}.",
+                "build": f"Containerize your project and add automated unit tests.",
+                "test": f"Solve the interactive {skill} code challenge in the Monaco editor.",
+                "verify": "Re-analyze your updated repository to verify new AST signals.",
+                "next": f"Achieve Level 4/5 production-grade evidence in {skill}.",
+            }
+        else:
+            return {
+                "why": f"{skill} is a foundational pillar for {role_title}.",
+                "current_proof": f"Verified physical source code implementation detected in repository.",
+                "gap": "Core evidence verified; ready for advanced production hardening.",
+                "learn": f"Explore high-throughput optimization and distributed systems with {skill}.",
+                "build": "Contribute to open-source libraries or author production templates.",
+                "test": f"Challenge yourself with Expert-level {skill} assessments.",
+                "verify": "Ensure continuous testing and documentation in your public repository.",
+                "next": "Focus on remaining partial/missing skills in your career matrix.",
+            }

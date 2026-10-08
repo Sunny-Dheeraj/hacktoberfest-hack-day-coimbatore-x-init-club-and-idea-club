@@ -52,6 +52,26 @@ export interface ReadinessScore {
   supporting_score: number;
 }
 
+export interface GitHubProfile {
+  username: string;
+  name?: string;
+  bio?: string;
+  avatar_url: string;
+  public_repos: number;
+  html_url: string;
+}
+
+export interface RepositorySummary {
+  name: string;
+  description?: string;
+  language?: string;
+  stars: number;
+  forks: number;
+  updated_at?: string;
+  files_analyzed: number;
+  detected_skills?: string[];
+}
+
 export interface SkillAssessment {
   skill: string;
   classification: EvidenceStatus;
@@ -60,6 +80,9 @@ export interface SkillAssessment {
   evidence_strength: number;
   evidence_count: number;
   top_evidence: EvidenceItem[];
+  evidence_found?: string[];
+  missing_evidence?: string[];
+  evidence_locations?: string[];
 }
 
 export interface AIInsight {
@@ -92,6 +115,11 @@ export interface CareerAnalysisResponse {
   phase1_evidence_count: number;
   ai_available: boolean;
   metadata: Record<string, any>;
+  profile?: GitHubProfile;
+  repositories?: RepositorySummary[];
+  repositories_analyzed?: number;
+  total_public_repos?: number;
+  coverage_summary?: string;
 }
 
 // Phase 3 Assessment & Progress Types

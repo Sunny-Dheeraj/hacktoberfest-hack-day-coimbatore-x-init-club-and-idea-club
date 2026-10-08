@@ -21,6 +21,7 @@ from app.models.career import (
     ReadinessScore,
     RoleAnalysis,
     CareerAnalysis,
+    RepositorySummary,
 )
 
 logger = logging.getLogger(__name__)
@@ -107,6 +108,11 @@ class CareerService:
         username: str,
         skill_summaries: List[SkillSummary],
         role_ids: Optional[List[str]] = None,
+        profile: Optional[Any] = None,
+        repositories: Optional[List[Any]] = None,
+        repositories_analyzed: int = 0,
+        total_public_repos: int = 0,
+        coverage_summary: str = "",
     ) -> CareerAnalysis:
         """
         Run deterministic career analysis against Phase 1 evidence.
@@ -115,6 +121,11 @@ class CareerService:
             username: GitHub username
             skill_summaries: Phase 1 SkillSummary list (from EvidenceService)
             role_ids: Optional list of role IDs to analyze (None = all)
+            profile: Optional GitHub profile object
+            repositories: Optional list of analyzed repositories
+            repositories_analyzed: Count of analyzed repositories
+            total_public_repos: Total public repositories on profile
+            coverage_summary: Transparency summary string
 
         Returns:
             CareerAnalysis with readiness scores and skill assessments
@@ -140,11 +151,35 @@ class CareerService:
         # Compute overall strengths (proven skills across all roles)
         overall_strengths = self._compute_overall_strengths(skill_summaries)
 
+        formatted_repos: List[RepositorySummary] = []
+        for repo in (repositories or []):
+            if isinstance(repo, RepositorySummary):
+                formatted_repos.append(repo)
+            elif hasattr(repo, "name"):
+                formatted_repos.append(
+                    RepositorySummary(
+                        name=getattr(repo, "name", ""),
+                        description=getattr(repo, "description", None),
+                        language=getattr(repo, "language", None),
+                        stars=getattr(repo, "stars", 0),
+                        forks=getattr(repo, "forks", 0),
+                        files_analyzed=getattr(repo, "files_analyzed", 0),
+                        skills_detected=getattr(repo, "skills_detected", []),
+                    )
+                )
+            elif isinstance(repo, dict):
+                formatted_repos.append(RepositorySummary(**repo))
+
         return CareerAnalysis(
             username=username,
             roles_analyzed=role_analyses,
             overall_strengths=overall_strengths,
             primary_role=primary_role,
+            profile=profile,
+            repositories=formatted_repos,
+            repositories_analyzed=repositories_analyzed,
+            total_public_repos=total_public_repos,
+            coverage_summary=coverage_summary,
             analysis_metadata={
                 "total_skills_evaluated": len(skill_summaries),
                 "roles_count": len(role_analyses),
@@ -195,10 +230,29 @@ class CareerService:
     def _assess_skill(
         self, req: RoleSkillRequirement, skill_map: Dict[str, SkillSummary]
     ) -> SkillAssessment:
-        """Classify a single skill requirement against Phase 1 evidence."""
+        """Classify a single skill requirement against Phase 1 evidence with detailed findings."""
         summary = skill_map.get(req.skill)
 
+        evidence_found: List[str] = []
+        missing_evidence: List[str] = []
+        evidence_locations: List[str] = []
+
+        if summary and summary.evidence:
+            for ev in summary.evidence:
+                loc = f"{ev.repository}/{ev.file}" if ev.repository and ev.file else (ev.file or "")
+                if loc and loc not in evidence_locations:
+                    evidence_locations.append(loc)
+                for sig in ev.signals:
+                    clean_sig = sig.replace("_", " ").title()
+                    if clean_sig not in evidence_found:
+                        evidence_found.append(clean_sig)
+
         if not summary or summary.strength < PARTIAL_THRESHOLD:
+            missing_evidence.extend([
+                f"Source code files implementing {req.skill} logic",
+                f"Dependencies or configuration files referencing {req.skill}",
+                "Public GitHub repository demonstrating practical proficiency",
+            ])
             return SkillAssessment(
                 skill=req.skill,
                 classification=SkillClassification.MISSING,
@@ -207,8 +261,14 @@ class CareerService:
                 evidence_strength=summary.strength if summary else 0,
                 evidence_count=len(summary.evidence) if summary else 0,
                 top_evidence=summary.evidence[:3] if summary else [],
+                evidence_found=evidence_found,
+                missing_evidence=missing_evidence,
+                evidence_locations=evidence_locations,
             )
         elif summary.strength >= PROVEN_THRESHOLD:
+            if not evidence_found:
+                evidence_found.append(f"{req.skill} verified in source code implementation")
+            missing_evidence.append("Automated test coverage and continuous integration pipelines")
             return SkillAssessment(
                 skill=req.skill,
                 classification=SkillClassification.PROVEN,
@@ -217,8 +277,18 @@ class CareerService:
                 evidence_strength=summary.strength,
                 evidence_count=len(summary.evidence),
                 top_evidence=summary.evidence[:3],
+                evidence_found=evidence_found,
+                missing_evidence=missing_evidence,
+                evidence_locations=evidence_locations,
             )
         else:
+            if not evidence_found:
+                evidence_found.append(f"{req.skill} declared in project configuration or manifests")
+            missing_evidence.extend([
+                f"Deep implementation usage of {req.skill} APIs and modules",
+                "Unit and integration tests for core logic",
+                "Containerization or production deployment configuration",
+            ])
             return SkillAssessment(
                 skill=req.skill,
                 classification=SkillClassification.PARTIAL,
@@ -227,6 +297,9 @@ class CareerService:
                 evidence_strength=summary.strength,
                 evidence_count=len(summary.evidence),
                 top_evidence=summary.evidence[:3],
+                evidence_found=evidence_found,
+                missing_evidence=missing_evidence,
+                evidence_locations=evidence_locations,
             )
 
     def _calculate_readiness(self, assessments: List[SkillAssessment]) -> ReadinessScore:

@@ -28,6 +28,9 @@ class LearningResourceType(str, Enum):
     TUTORIAL = "tutorial"
     COURSE = "course"
     GUIDE = "guide"
+    PRACTICE = "practice"
+    YOUTUBE = "youtube"
+    VIDEO = "video"
     EXAMPLE = "example"
 
 

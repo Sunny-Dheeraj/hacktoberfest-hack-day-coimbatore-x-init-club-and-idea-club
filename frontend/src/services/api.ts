@@ -169,4 +169,43 @@ export const api = {
     const res = await fetch(`${API_BASE_URL}/api/progress/${encodeURIComponent(username)}/recommendations${qs}`);
     return handleResponse(res);
   },
+
+  // Adaptive 100+ Question Bank Assessment
+  startAdaptiveAssessment: async (
+    username: string,
+    skill: string,
+    mode: 'quick' | 'standard' | 'full' | 'comprehensive' = 'quick',
+    roleId?: string
+  ): Promise<any> => {
+    const res = await fetch(`${API_BASE_URL}/api/assessment/start`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, skill, mode, role_id: roleId }),
+    });
+    return handleResponse(res);
+  },
+
+  submitAdaptiveAnswer: async (
+    sessionId: string,
+    questionId: string,
+    selectedAnswer: string,
+    timeTakenSeconds?: number
+  ): Promise<any> => {
+    const res = await fetch(`${API_BASE_URL}/api/assessment/answer`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        session_id: sessionId,
+        question_id: questionId,
+        selected_answer: selectedAnswer,
+        time_taken_seconds: timeTakenSeconds,
+      }),
+    });
+    return handleResponse(res);
+  },
+
+  getQuestionBankSummary: async (skill: string): Promise<any> => {
+    const res = await fetch(`${API_BASE_URL}/api/assessment/summary/${encodeURIComponent(skill)}`);
+    return handleResponse(res);
+  },
 };

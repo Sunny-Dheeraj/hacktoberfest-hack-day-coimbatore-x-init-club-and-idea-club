@@ -4,7 +4,18 @@ from enum import Enum
 from typing import List, Optional, Dict, Any
 from pydantic import BaseModel, Field
 
-from app.models.evidence import EvidenceStatus, EvidenceItem, SkillSummary
+from app.models.evidence import EvidenceStatus, EvidenceItem, SkillSummary, GitHubProfile
+
+
+class RepositorySummary(BaseModel):
+    """Summary of an analyzed repository."""
+    name: str
+    description: Optional[str] = None
+    language: Optional[str] = None
+    stars: int = 0
+    forks: int = 0
+    files_analyzed: int = 0
+    skills_detected: List[str] = Field(default_factory=list)
 
 
 class SkillClassification(str, Enum):
@@ -44,6 +55,9 @@ class SkillAssessment(BaseModel):
     evidence_strength: int = Field(ge=0, le=5)
     evidence_count: int = 0
     top_evidence: List[EvidenceItem] = Field(default_factory=list, description="Top evidence items for this skill")
+    evidence_found: List[str] = Field(default_factory=list, description="Positive evidence signals discovered")
+    missing_evidence: List[str] = Field(default_factory=list, description="Evidence needed to advance to higher tier")
+    evidence_locations: List[str] = Field(default_factory=list, description="Physical repository file paths")
 
 
 class ReadinessScore(BaseModel):
@@ -85,3 +99,8 @@ class CareerAnalysis(BaseModel):
     overall_strengths: List[str] = Field(default_factory=list)
     primary_role: Optional[str] = Field(None, description="Best-matching role ID")
     analysis_metadata: Dict[str, Any] = Field(default_factory=dict)
+    profile: Optional[GitHubProfile] = None
+    repositories: List[RepositorySummary] = Field(default_factory=list)
+    repositories_analyzed: int = 0
+    total_public_repos: int = 0
+    coverage_summary: str = ""

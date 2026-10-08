@@ -1,4 +1,4 @@
-"""API routes for ProofPath Phase 3 Proof & Progress."""
+"""API routes for ProofPath Phase 3 & 4 Proof & Progress and Adaptive Assessments."""
 
 import logging
 from typing import List, Optional
@@ -9,6 +9,10 @@ from app.models.progress import (
     CodeChallenge,
     PracticalTask,
     NextBestAction,
+)
+from app.models.question import (
+    QuestionDifficulty,
+    AssessmentMode,
 )
 from app.schemas.progress import (
     FullSkillAssessment,
@@ -21,10 +25,18 @@ from app.schemas.progress import (
     LearningPathResponse,
     UserProgressResponse,
 )
+from app.schemas.question import (
+    StartAdaptiveAssessmentRequest,
+    AdaptiveQuestionOut,
+    SubmitAdaptiveAnswerRequest,
+    AdaptiveAnswerResult,
+    QuestionBankSummary,
+)
 from app.services.quiz_service import QuizService
 from app.services.learning_service import LearningService
 from app.services.verification_service import VerificationService
 from app.services.progress_service import ProgressService
+from app.services.adaptive_assessment_service import AdaptiveAssessmentService
 
 logger = logging.getLogger(__name__)
 
@@ -35,14 +47,131 @@ quiz_service = QuizService()
 learning_service = LearningService()
 verification_service = VerificationService()
 progress_service = ProgressService()
+adaptive_service = AdaptiveAssessmentService()
 
 
 # ---------------------------------------------------------------------------
-# Quiz & Code Challenge Endpoints
+# Adaptive Assessment Endpoints (100+ Question Bank)
 # ---------------------------------------------------------------------------
 
 @router.post(
+    "/assessment/start",
+    response_model=dict,
+    summary="Start an adaptive skill assessment session (Quick/Standard/Full/Comprehensive)",
+)
+async def start_adaptive_assessment(request: StartAdaptiveAssessmentRequest):
+    """Initializes an adaptive testing session spanning Beginner to Expert."""
+    session, first_q = adaptive_service.start_session(
+        username=request.username,
+        skill=request.skill,
+        mode=request.mode,
+    )
+    q_out = None
+    if first_q:
+        q_out = AdaptiveQuestionOut(
+            session_id=session.session_id,
+            question_id=first_q.id,
+            skill=first_q.skill,
+            topic=first_q.topic,
+            difficulty=first_q.difficulty,
+            question_type=first_q.question_type,
+            question_text=first_q.question_text,
+            code_snippet=first_q.code_snippet,
+            options=first_q.options,
+            question_number=1,
+            total_questions=session.target_count,
+        ).model_dump()
+
+    return {
+        "session_id": session.session_id,
+        "username": session.username,
+        "skill": session.skill,
+        "mode": session.mode.value,
+        "target_questions": session.target_count,
+        "current_difficulty": session.current_difficulty.value,
+        "first_question": q_out,
+    }
+
+
+@router.post(
+    "/assessment/answer",
+    response_model=AdaptiveAnswerResult,
+    summary="Submit answer for an adaptive question; adapts difficulty and tracks performance",
+)
+async def submit_adaptive_answer(request: SubmitAdaptiveAnswerRequest):
+    """Submits answer, grades deterministically, adapts difficulty, and tracks strong/weak topics."""
+    try:
+        (
+            is_correct,
+            correct_ans,
+            explanation,
+            next_diff,
+            is_completed,
+            next_q,
+            session,
+        ) = adaptive_service.submit_answer(
+            session_id=request.session_id,
+            question_id=request.question_id,
+            selected_answer=request.selected_answer,
+            time_taken_seconds=request.time_taken_seconds,
+        )
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
+    next_q_out = None
+    if next_q:
+        next_q_out = AdaptiveQuestionOut(
+            session_id=session.session_id,
+            question_id=next_q.id,
+            skill=next_q.skill,
+            topic=next_q.topic,
+            difficulty=next_q.difficulty,
+            question_type=next_q.question_type,
+            question_text=next_q.question_text,
+            code_snippet=next_q.code_snippet,
+            options=next_q.options,
+            question_number=session.questions_answered + 1,
+            total_questions=session.target_count,
+        )
+
+    # If completed, sync score to composite progress
+    if is_completed:
+        progress_service.update_skill_progress(
+            username=session.username,
+            skill=session.skill,
+            quiz_score=session.score,
+        )
+
+    return AdaptiveAnswerResult(
+        is_correct=is_correct,
+        correct_answer=correct_ans,
+        explanation=explanation,
+        next_difficulty=next_diff,
+        streak=session.correct_streak,
+        session_completed=is_completed,
+        current_score=session.score,
+        next_question=next_q_out,
+        session_summary=session if is_completed else None,
+    )
+
+
+@router.get(
+    "/assessment/summary/{skill}",
+    response_model=QuestionBankSummary,
+    summary="Get question bank statistics for a skill",
+)
+async def get_question_bank_summary(skill: str):
+    """Provides breakdown of 100+ questions across difficulty tiers and topics."""
+    return adaptive_service.get_skill_bank_summary(skill)
+
+
+# ---------------------------------------------------------------------------
+# Quiz & Code Challenge Endpoints (Compatible with GET & POST)
+# ---------------------------------------------------------------------------
+
+@router.api_route(
     "/quiz/generate",
+    methods=["GET", "POST"],
     response_model=FullSkillAssessment,
     summary="Generate 3-dimension assessment (Knowledge, Code Reasoning, Implementation)",
 )
@@ -71,8 +200,9 @@ async def submit_quiz(request: QuizSubmissionRequest):
     return result
 
 
-@router.post(
+@router.api_route(
     "/code-challenges/generate",
+    methods=["GET", "POST"],
     response_model=CodeChallenge,
     summary="Retrieve coding challenge for Monaco editor",
 )
@@ -136,11 +266,12 @@ async def get_role_learning_path(
 
 
 # ---------------------------------------------------------------------------
-# Practical Missions & Verification Endpoints
+# Practical Missions & Verification Endpoints (Compatible with GET & POST)
 # ---------------------------------------------------------------------------
 
-@router.post(
+@router.api_route(
     "/tasks/generate",
+    methods=["GET", "POST"],
     response_model=PracticalTask,
     summary="Generate practical mission specifications for a skill",
 )

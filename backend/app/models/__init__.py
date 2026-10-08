@@ -18,6 +18,7 @@ from app.models.career import (
     AIInsight,
     RoleAnalysis,
     CareerAnalysis,
+    RepositorySummary,
 )
 from app.models.progress import (
     LearningResource,

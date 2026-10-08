@@ -1,6 +1,6 @@
 import React from 'react';
 import { ThemeToggle } from '../common/ThemeToggle';
-import { GitBranch, ShieldCheck, Compass, BookOpen, CheckSquare, BarChart2, RefreshCw } from 'lucide-react';
+import { GitBranch, ShieldCheck, Compass, BookOpen, CheckSquare, BarChart2, RefreshCw, FolderGit2 } from 'lucide-react';
 
 interface HeaderProps {
   username?: string;
@@ -39,7 +39,7 @@ export const Header: React.FC<HeaderProps> = ({
                 onClick={() => onSelectTab('dashboard')}
                 className={`px-3 py-1.5 text-xs font-medium rounded-md transition-colors flex items-center space-x-1.5 ${
                   currentTab === 'dashboard'
-                    ? 'bg-gray-100 dark:bg-dark-card text-gray-900 dark:text-white'
+                    ? 'bg-gray-100 dark:bg-dark-card text-gray-900 dark:text-white font-semibold'
                     : 'text-gray-600 dark:text-dark-muted hover:text-gray-900 dark:hover:text-dark-text'
                 }`}
               >
@@ -47,10 +47,21 @@ export const Header: React.FC<HeaderProps> = ({
                 <span>Dashboard</span>
               </button>
               <button
+                onClick={() => onSelectTab('repos')}
+                className={`px-3 py-1.5 text-xs font-medium rounded-md transition-colors flex items-center space-x-1.5 ${
+                  currentTab === 'repos'
+                    ? 'bg-gray-100 dark:bg-dark-card text-gray-900 dark:text-white font-semibold'
+                    : 'text-gray-600 dark:text-dark-muted hover:text-gray-900 dark:hover:text-dark-text'
+                }`}
+              >
+                <FolderGit2 className="w-3.5 h-3.5" />
+                <span>Repositories</span>
+              </button>
+              <button
                 onClick={() => onSelectTab('evidence')}
                 className={`px-3 py-1.5 text-xs font-medium rounded-md transition-colors flex items-center space-x-1.5 ${
                   currentTab === 'evidence'
-                    ? 'bg-gray-100 dark:bg-dark-card text-gray-900 dark:text-white'
+                    ? 'bg-gray-100 dark:bg-dark-card text-gray-900 dark:text-white font-semibold'
                     : 'text-gray-600 dark:text-dark-muted hover:text-gray-900 dark:hover:text-dark-text'
                 }`}
               >
