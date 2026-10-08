@@ -1,0 +1,563 @@
+{
+  "skills": [
+    {
+      "name": "Python",
+      "category": "Programming Languages",
+      "signals": [
+        "python_ast",
+        "def",
+        "class",
+        "async_def",
+        "__init__",
+        "import"
+      ],
+      "dependencies": [
+        "python"
+      ],
+      "file_extensions": [
+        ".py",
+        ".ipynb"
+      ],
+      "parent_skills": []
+    },
+    {
+      "name": "JavaScript",
+      "category": "Programming Languages",
+      "signals": [
+        "js_syntax",
+        "function",
+        "const",
+        "let",
+        "async_function",
+        "arrow_function",
+        "console.log",
+        "document.getElementById"
+      ],
+      "dependencies": [],
+      "file_extensions": [
+        ".js",
+        ".jsx",
+        ".mjs",
+        ".cjs"
+      ],
+      "parent_skills": []
+    },
+    {
+      "name": "TypeScript",
+      "category": "Programming Languages",
+      "signals": [
+        "ts_interface",
+        "ts_type_alias",
+        "ts_enum",
+        "ts_type_annotation",
+        "ts_generic",
+        "ts_as_cast"
+      ],
+      "dependencies": [
+        "typescript",
+        "ts-node",
+        "@types/node"
+      ],
+      "file_extensions": [
+        ".ts",
+        ".tsx"
+      ],
+      "parent_skills": [
+        "JavaScript"
+      ]
+    },
+    {
+      "name": "React",
+      "category": "Frontend Frameworks",
+      "signals": [
+        "import_react",
+        "useState",
+        "useEffect",
+        "useContext",
+        "useReducer",
+        "useMemo",
+        "useCallback",
+        "useRef",
+        "react_component",
+        "jsx_element"
+      ],
+      "dependencies": [
+        "react",
+        "react-dom",
+        "@types/react",
+        "next",
+        "gatsby"
+      ],
+      "file_extensions": [
+        ".jsx",
+        ".tsx",
+        ".js",
+        ".ts"
+      ],
+      "parent_skills": [
+        "JavaScript"
+      ]
+    },
+    {
+      "name": "Node.js",
+      "category": "Backend Runtime",
+      "signals": [
+        "require",
+        "module.exports",
+        "process.env",
+        "fs.readFile",
+        "path.join",
+        "http.createServer"
+      ],
+      "dependencies": [
+        "@types/node",
+        "express",
+        "koa",
+        "fastify",
+        "dotenv"
+      ],
+      "file_extensions": [
+        ".js",
+        ".ts",
+        ".mjs",
+        ".cjs"
+      ],
+      "parent_skills": [
+        "JavaScript"
+      ]
+    },
+    {
+      "name": "FastAPI",
+      "category": "Backend Frameworks",
+      "signals": [
+        "fastapi",
+        "FastAPI",
+        "APIRouter",
+        "Depends",
+        "fastapi_route_decorator",
+        "HTTPException"
+      ],
+      "dependencies": [
+        "fastapi",
+        "uvicorn"
+      ],
+      "file_extensions": [
+        ".py"
+      ],
+      "parent_skills": [
+        "Python",
+        "REST API"
+      ]
+    },
+    {
+      "name": "Flask",
+      "category": "Backend Frameworks",
+      "signals": [
+        "flask",
+        "Flask",
+        "flask_route_decorator",
+        "render_template",
+        "jsonify",
+        "request.args"
+      ],
+      "dependencies": [
+        "flask",
+        "werkzeug",
+        "jinja2"
+      ],
+      "file_extensions": [
+        ".py"
+      ],
+      "parent_skills": [
+        "Python",
+        "REST API"
+      ]
+    },
+    {
+      "name": "Django",
+      "category": "Backend Frameworks",
+      "signals": [
+        "django",
+        "django.db.models",
+        "django.urls",
+        "django.views",
+        "urlpatterns",
+        "settings.py"
+      ],
+      "dependencies": [
+        "django",
+        "djangorestframework"
+      ],
+      "file_extensions": [
+        ".py"
+      ],
+      "parent_skills": [
+        "Python",
+        "REST API"
+      ]
+    },
+    {
+      "name": "PyTorch",
+      "category": "Machine Learning",
+      "signals": [
+        "torch",
+        "torch.nn",
+        "torch.nn.Module",
+        "torch.optim",
+        "torch.optim.Adam",
+        "torch.optim.SGD",
+        "DataLoader",
+        "Dataset",
+        "loss.backward",
+        "optimizer.step",
+        "torch.cuda",
+        "torch.tensor"
+      ],
+      "dependencies": [
+        "torch",
+        "torchvision",
+        "torchaudio",
+        "pytorch-lightning"
+      ],
+      "file_extensions": [
+        ".py",
+        ".ipynb"
+      ],
+      "parent_skills": [
+        "Python",
+        "Deep Learning",
+        "Machine Learning"
+      ]
+    },
+    {
+      "name": "TensorFlow",
+      "category": "Machine Learning",
+      "signals": [
+        "tensorflow",
+        "tf.keras",
+        "tf.keras.layers",
+        "tf.keras.models",
+        "tf.data.Dataset",
+        "tf.GradientTape",
+        "tf.constant"
+      ],
+      "dependencies": [
+        "tensorflow",
+        "keras",
+        "tensorflow-gpu"
+      ],
+      "file_extensions": [
+        ".py",
+        ".ipynb"
+      ],
+      "parent_skills": [
+        "Python",
+        "Deep Learning",
+        "Machine Learning"
+      ]
+    },
+    {
+      "name": "Scikit-learn",
+      "category": "Machine Learning",
+      "signals": [
+        "sklearn",
+        "sklearn.model_selection",
+        "train_test_split",
+        "sklearn.linear_model",
+        "sklearn.ensemble",
+        "model.fit",
+        "model.predict",
+        "StandardScaler",
+        "classification_report"
+      ],
+      "dependencies": [
+        "scikit-learn",
+        "sklearn"
+      ],
+      "file_extensions": [
+        ".py",
+        ".ipynb"
+      ],
+      "parent_skills": [
+        "Python",
+        "Machine Learning"
+      ]
+    },
+    {
+      "name": "Pandas",
+      "category": "Data Science",
+      "signals": [
+        "pandas",
+        "pd.read_csv",
+        "pd.read_json",
+        "pd.DataFrame",
+        "pd.Series",
+        "df.groupby",
+        "df.merge",
+        "df.dropna",
+        "df.apply"
+      ],
+      "dependencies": [
+        "pandas"
+      ],
+      "file_extensions": [
+        ".py",
+        ".ipynb"
+      ],
+      "parent_skills": [
+        "Python",
+        "Data Analysis"
+      ]
+    },
+    {
+      "name": "NumPy",
+      "category": "Data Science",
+      "signals": [
+        "numpy",
+        "np.array",
+        "np.zeros",
+        "np.ones",
+        "np.mean",
+        "np.dot",
+        "np.linspace",
+        "np.arange",
+        "np.ndarray"
+      ],
+      "dependencies": [
+        "numpy"
+      ],
+      "file_extensions": [
+        ".py",
+        ".ipynb"
+      ],
+      "parent_skills": [
+        "Python",
+        "Data Analysis"
+      ]
+    },
+    {
+      "name": "SQL",
+      "category": "Databases",
+      "signals": [
+        "sql_query",
+        "SELECT",
+        "INSERT INTO",
+        "UPDATE",
+        "DELETE FROM",
+        "CREATE TABLE",
+        "JOIN",
+        "sqlalchemy",
+        "sqlite3",
+        "psycopg2"
+      ],
+      "dependencies": [
+        "sqlalchemy",
+        "psycopg2",
+        "psycopg2-binary",
+        "mysql-connector-python",
+        "mysqlclient",
+        "sqlite3",
+        "pg",
+        "mysql2"
+      ],
+      "file_extensions": [
+        ".sql"
+      ],
+      "parent_skills": []
+    },
+    {
+      "name": "Git",
+      "category": "Version Control",
+      "signals": [
+        ".gitignore",
+        ".gitattributes",
+        ".github/workflows",
+        "git_commit"
+      ],
+      "dependencies": [],
+      "file_extensions": [],
+      "parent_skills": []
+    },
+    {
+      "name": "Docker",
+      "category": "DevOps",
+      "signals": [
+        "Dockerfile",
+        "docker-compose.yml",
+        "docker_instruction_FROM",
+        "docker_instruction_RUN",
+        "docker_instruction_CMD",
+        "docker_compose_services"
+      ],
+      "dependencies": [],
+      "file_extensions": [
+        "Dockerfile",
+        "docker-compose.yml",
+        "docker-compose.yaml"
+      ],
+      "parent_skills": []
+    },
+    {
+      "name": "OpenCV",
+      "category": "Computer Vision",
+      "signals": [
+        "cv2",
+        "cv2.imread",
+        "cv2.imshow",
+        "cv2.cvtColor",
+        "cv2.VideoCapture",
+        "cv2.CascadeClassifier",
+        "cv2.resize"
+      ],
+      "dependencies": [
+        "opencv-python",
+        "opencv-contrib-python",
+        "cv2"
+      ],
+      "file_extensions": [
+        ".py",
+        ".ipynb"
+      ],
+      "parent_skills": [
+        "Python",
+        "Machine Learning"
+      ]
+    },
+    {
+      "name": "Transformers",
+      "category": "Machine Learning",
+      "signals": [
+        "transformers",
+        "AutoModel",
+        "AutoTokenizer",
+        "pipeline",
+        "AutoModelForSequenceClassification",
+        "Trainer",
+        "TrainingArguments"
+      ],
+      "dependencies": [
+        "transformers",
+        "tokenizers",
+        "huggingface-hub",
+        "datasets"
+      ],
+      "file_extensions": [
+        ".py",
+        ".ipynb"
+      ],
+      "parent_skills": [
+        "Python",
+        "Deep Learning",
+        "Machine Learning"
+      ]
+    },
+    {
+      "name": "Machine Learning",
+      "category": "Data Science",
+      "signals": [
+        "train_test_split",
+        "model.fit",
+        "model.predict",
+        "model.evaluate",
+        "classification_report",
+        "confusion_matrix",
+        "GridSearchCV",
+        "accuracy_score",
+        "DataLoader",
+        "optimizer.step"
+      ],
+      "dependencies": [
+        "scikit-learn",
+        "sklearn",
+        "xgboost",
+        "lightgbm",
+        "catboost",
+        "torch",
+        "tensorflow"
+      ],
+      "file_extensions": [
+        ".py",
+        ".ipynb"
+      ],
+      "parent_skills": []
+    },
+    {
+      "name": "Deep Learning",
+      "category": "Machine Learning",
+      "signals": [
+        "torch.nn.Module",
+        "tf.keras.models",
+        "loss.backward",
+        "optimizer.step",
+        "torch.cuda",
+        "tf.GradientTape",
+        "AutoModel",
+        "DataLoader"
+      ],
+      "dependencies": [
+        "torch",
+        "tensorflow",
+        "keras",
+        "transformers"
+      ],
+      "file_extensions": [
+        ".py",
+        ".ipynb"
+      ],
+      "parent_skills": [
+        "Machine Learning"
+      ]
+    },
+    {
+      "name": "REST API",
+      "category": "Backend Development",
+      "signals": [
+        "fastapi_route_decorator",
+        "flask_route_decorator",
+        "express_route_handler",
+        "APIRouter",
+        "fetch",
+        "axios",
+        "HTTPException",
+        "jsonify"
+      ],
+      "dependencies": [
+        "fastapi",
+        "flask",
+        "express",
+        "axios"
+      ],
+      "file_extensions": [
+        ".py",
+        ".js",
+        ".ts"
+      ],
+      "parent_skills": []
+    },
+    {
+      "name": "Data Analysis",
+      "category": "Data Science",
+      "signals": [
+        "pd.read_csv",
+        "df.groupby",
+        "df.describe",
+        "plt.plot",
+        "sns.heatmap",
+        "np.mean",
+        "df.plot",
+        "data_exploration"
+      ],
+      "dependencies": [
+        "pandas",
+        "numpy",
+        "matplotlib",
+        "seaborn"
+      ],
+      "file_extensions": [
+        ".py",
+        ".ipynb"
+      ],
+      "parent_skills": []
+    }
+  ]
+}
