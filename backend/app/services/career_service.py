@@ -36,15 +36,15 @@ PARTIAL_THRESHOLD = 2  # strength == 2 → Partial
 # strength 0-1 → Missing
 
 
+from app.utils.paths import get_data_file_path
+
+
 class CareerService:
     """Deterministic career readiness analysis built on Phase 1 evidence."""
 
     def __init__(self, roles_json_path: Optional[str] = None):
         if not roles_json_path:
-            base_dir = os.path.abspath(
-                os.path.join(os.path.dirname(__file__), "..", "..", "..")
-            )
-            roles_json_path = os.path.join(base_dir, "data", "roles.json")
+            roles_json_path = get_data_file_path("roles.json")
 
         self.roles_json_path = roles_json_path
         self.roles: List[CareerRole] = self._load_roles()

@@ -47,15 +47,14 @@ MODE_TARGETS = {
 }
 
 
+from app.utils.paths import get_data_file_path
+
+
 class AdaptiveAssessmentService:
     """Manages persistent question banks, adaptive test sessions, and skill mastery scoring."""
 
     def __init__(self, question_bank_path: Optional[str] = None):
-        self.base_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-        if question_bank_path:
-            self.question_bank_path = question_bank_path
-        else:
-            self.question_bank_path = os.path.join(self.base_dir, "..", "data", "question_bank.json")
+        self.question_bank_path = question_bank_path or get_data_file_path("question_bank.json")
 
         self.questions_by_skill: Dict[str, List[AssessmentQuestion]] = {}
         self.sessions: Dict[str, AdaptiveAssessmentSession] = {}

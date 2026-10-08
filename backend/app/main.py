@@ -46,6 +46,7 @@ app.include_router(progress_router)
 
 
 @app.get("/health", tags=["Health"])
+@app.get("/api/health", tags=["Health"])
 async def health_check():
     """Health check endpoint to verify backend service readiness."""
     return {

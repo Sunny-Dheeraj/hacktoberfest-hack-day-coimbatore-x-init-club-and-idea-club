@@ -20,12 +20,9 @@ class SkillDetector:
     """Evaluates collected code signals against the data-driven skill taxonomy."""
 
     def __init__(self, skills_json_path: Optional[str] = None):
-        if not skills_json_path:
-            # Look in standard repository locations
-            base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", ".."))
-            skills_json_path = os.path.join(base_dir, "data", "skills.json")
+        from app.utils.paths import get_data_file_path
 
-        self.skills_json_path = skills_json_path
+        self.skills_json_path = skills_json_path or get_data_file_path("skills.json")
         self.taxonomy = self._load_taxonomy()
 
     def _load_taxonomy(self) -> List[Dict[str, Any]]:

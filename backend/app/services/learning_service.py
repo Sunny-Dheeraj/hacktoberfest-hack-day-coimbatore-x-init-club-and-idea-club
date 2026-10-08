@@ -16,6 +16,9 @@ from app.services.career_service import CareerService
 logger = logging.getLogger(__name__)
 
 
+from app.utils.paths import get_data_file_path
+
+
 class LearningService:
     """Manages learning resources and builds gap-prioritized learning paths."""
 
@@ -24,11 +27,7 @@ class LearningService:
         resources_json_path: Optional[str] = None,
         career_service: Optional[CareerService] = None,
     ):
-        if not resources_json_path:
-            base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", ".."))
-            resources_json_path = os.path.join(base_dir, "data", "resources.json")
-
-        self.resources_json_path = resources_json_path
+        self.resources_json_path = resources_json_path or get_data_file_path("resources.json")
         self.career_service = career_service or CareerService()
         self.resources = self._load_resources()
 

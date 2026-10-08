@@ -44,11 +44,9 @@ class VerificationService:
         self.github_service = github_service or GitHubService()
         self.repository_service = repository_service or RepositoryService(github_service=self.github_service)
 
-        if not challenges_json_path:
-            base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", ".."))
-            challenges_json_path = os.path.join(base_dir, "data", "challenges.json")
+        from app.utils.paths import get_data_file_path
 
-        self.challenges_json_path = challenges_json_path
+        self.challenges_json_path = challenges_json_path or get_data_file_path("challenges.json")
         self.analyzers = [
             PythonAnalyzer(),
             JavaScriptAnalyzer(),

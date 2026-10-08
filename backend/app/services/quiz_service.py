@@ -33,6 +33,9 @@ from app.db.models import QuizAttemptRecord, CodeChallengeAttemptRecord
 logger = logging.getLogger(__name__)
 
 
+from app.utils.paths import get_data_file_path
+
+
 class QuizService:
     """Manages 3-dimension assessments and deterministic grading."""
 
@@ -41,11 +44,7 @@ class QuizService:
         challenges_json_path: Optional[str] = None,
         code_evaluator: Optional[CodeEvaluator] = None,
     ):
-        if not challenges_json_path:
-            base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", ".."))
-            challenges_json_path = os.path.join(base_dir, "data", "challenges.json")
-
-        self.challenges_json_path = challenges_json_path
+        self.challenges_json_path = challenges_json_path or get_data_file_path("challenges.json")
         self.code_evaluator = code_evaluator or CodeEvaluator()
         self.catalog = self._load_catalog()
 

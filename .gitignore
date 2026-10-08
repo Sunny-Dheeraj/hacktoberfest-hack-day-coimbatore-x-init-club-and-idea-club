@@ -41,7 +41,9 @@ Thumbs.db
 # AI / model files
 *.gguf
 *.safetensors
-/models/
+# Archives
+*.zip
+*.tar.gz
 
 # Temporary
 tmp/
