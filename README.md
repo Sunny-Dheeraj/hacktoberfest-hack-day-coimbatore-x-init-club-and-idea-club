@@ -719,44 +719,49 @@ Required AI model/runtime
 ### Installation
 
 ```bash
-git clone https://github.com/Sunny-Dheeraj/hacktoberfest-hack-day-coimbatore-x-init-club-and-idea-club
+# Clone the repository
+git clone https://github.com/Sunny-Dheeraj/hacktoberfest-hack-day-coimbatore-x-init-club-and-idea-club.git
 
-cd proofpath
-Backend
+# Enter the project
+cd hacktoberfest-hack-day-coimbatore-x-init-club-and-idea-club
+
+# =========================
+# BACKEND SETUP
+# =========================
 
 cd backend
 
+# Create virtual environment
 python -m venv .venv
 
-Activate the environment:
-
-Linux / macOS
-
-source .venv/bin/activate
-
-Windows
-
+# Activate virtual environment
+# Windows:
 .venv\Scripts\activate
 
-Install dependencies:
+# Linux / macOS:
+source .venv/bin/activate
 
+# Install backend dependencies
 pip install -r requirements.txt
 
-Frontend
+# =========================
+# FRONTEND SETUP
+# =========================
 
 cd ../frontend
 
-npm installgit clone [repository-url]
-cd [project-directory]
-[installation-command]
+# Install frontend dependencies
+npm install
+
 ```
 
 ### Environment Variables
 
 ```env
-GITHUB_TOKEN=[your_github_token]
-GEMMA_MODEL=[configured_model]
-DATABASE_URL=[database_url_if_required][VARIABLE_NAME]=[value]
+GOOGLE_CLOUD_LOCATION=global
+GEMMA_MODEL=gemma-4-26b-a4b-it-maas
+GOOGLE_CLOUD_PROJECT=""
+GEMMA_API_KEY=""
 ```
 
 
@@ -764,23 +769,24 @@ DATABASE_URL=[database_url_if_required][VARIABLE_NAME]=[value]
 ### Running the Project
 
 ```bash
-Start Backend
-
-cd backend
-
-uvicorn app.main:app --reload
-
-Start Frontend
-
-In a separate terminal:
-
-cd frontend
-
-npm run dev
-
-Open the local development URL provided by Vite.
-
-
+──────
+ ┃   ### 1. Run the Backend API (FastAPI)
+ ┃
+ ┃   Open a terminal in the project root directory (C:\Users\dheer\OneDrive\Desktop\hack) and run:
+ ┃
+ ┃     .\.venv\Scripts\python -m uvicorn app.main:app --app-dir backend --reload --port 8000
+ ┃
+ ┃   • Backend API: http://localhost:8000
+ ┃   • Swagger Documentation: http://localhost:8000/docs
+ ┃   • Health Check: http://localhost:8000/api/health
+ ┃   ──────
+ ┃   ### 2. Run the Frontend UI (React + Vite)
+ ┃
+ ┃   Open a second terminal, navigate into the frontend folder, and run:
+ ┃
+ ┃     cd frontend
+ ┃     npm run dev
+ ┃
 ```
 
 ### 📖 Usage
