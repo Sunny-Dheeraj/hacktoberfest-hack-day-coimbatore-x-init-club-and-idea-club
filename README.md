@@ -1,6 +1,8 @@
 # ProofPath
 
-> Career advice backed by your own code.
+> Career advice backed by your own code.  
+> **Live Demo:** [https://proofpath-nine.vercel.app/](https://proofpath-nine.vercel.app/)  
+> **Project Drive:** [https://drive.google.com/drive/folders/1UlhRGEzIyUs6PX9j7JuSiXm6G9kPSC8T?usp=sharing](https://drive.google.com/drive/folders/1UlhRGEzIyUs6PX9j7JuSiXm6G9kPSC8T?usp=sharing)
 
 ## Team
 
@@ -398,12 +400,12 @@ flowchart TD
 
 | Category        | Technologies                |
 | --------------- | --------------------------- |
-| Frontend        | [Technologies / N/A]        |
-| Backend         | [Technologies / N/A]        |
-| Database        | [Technologies / N/A]        |
-| AI / ML         | [Models / frameworks / N/A] |
-| Infrastructure  | [Technologies / N/A]        |
-| APIs / Services | [Services / N/A]            |
+| Frontend        | React 18, TypeScript, Vite, Tailwind CSS, Monaco Editor (`@monaco-editor/react`), Lucide React |
+| Backend         | Python 3.10+, FastAPI, Uvicorn, Pydantic v2 |
+| Database        | SQLite (`proofpath.db`) via SQLAlchemy |
+| AI / ML         | Google Cloud Managed Gemma 4 (`gemma-4-26b-a4b-it-maas`), Python AST, Tokenizer Lexer |
+| Infrastructure  | Vercel (Production Frontend & Serverless Hosting) |
+| APIs / Services | GitHub REST API (v3) |
 
 
 ### How It Works
@@ -616,10 +618,11 @@ The MVP will prioritize a complete working flow over supporting a very large num
 
 ## Working Application
 
-**Live Application:** [Live URL]
+**Live Demo:** [https://proofpath-nine.vercel.app/](https://proofpath-nine.vercel.app/)
 
+**Project Drive:** [https://drive.google.com/drive/folders/1UlhRGEzIyUs6PX9j7JuSiXm6G9kPSC8T?usp=sharing](https://drive.google.com/drive/folders/1UlhRGEzIyUs6PX9j7JuSiXm6G9kPSC8T?usp=sharing)
 
-The application should allow users to:
+The application allows users to:
 
 Enter a GitHub username.
 
@@ -639,9 +642,7 @@ Receive personalized Proof Missions.
 
 ## Demo Video
 
-**Demo Video:** [Video URL]
-
-[Provide a short demonstration of the working project, covering the main user flow and important functionality.]
+**Project Drive & Demo Resources:** [https://drive.google.com/drive/folders/1UlhRGEzIyUs6PX9j7JuSiXm6G9kPSC8T?usp=sharing](https://drive.google.com/drive/folders/1UlhRGEzIyUs6PX9j7JuSiXm6G9kPSC8T?usp=sharing)
 
 ## Open Source and AI Usage
 
@@ -752,7 +753,6 @@ cd ../frontend
 
 # Install frontend dependencies
 npm install
-
 ```
 
 ### Environment Variables
@@ -760,8 +760,10 @@ npm install
 ```env
 GOOGLE_CLOUD_LOCATION=global
 GEMMA_MODEL=gemma-4-26b-a4b-it-maas
-GOOGLE_CLOUD_PROJECT=""
-GEMMA_API_KEY=""
+GOOGLE_CLOUD_PROJECT=[your_project_id]
+GEMMA_API_KEY=[your_api_key]
+GITHUB_TOKEN=[your_github_token]
+VITE_API_BASE_URL=https://proofpath-nine.vercel.app/api
 ```
 
 
@@ -888,7 +890,7 @@ All external components should be properly attributed and used according to thei
 
 ### License
 
-[ADD PROJECT LICENSE — e.g. MIT]
+MIT License
 
 ## Submission Checklist
 
