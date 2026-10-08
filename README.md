@@ -1,384 +1,731 @@
 # ProofPath
 
-> **Deterministic Skill Proof Extraction Engine & Career Readiness Platform**  
-> *Core Principle: NO EVIDENCE → NO CLAIM*  
-> *Motto: Code proves. AI interprets. GitHub verifies.*
-
----
+> Career advice backed by your own code.
 
 ## Team
 
-**Team Name:** Rebels  
-**Hackathon:** Hacktoberfest Hack Day — Coimbatore 2026 (INIT CLUB × iDEA CLUB × MLH)
+**Team Name:** Rebels
 
-| Member | Contribution |
-| ------ | ------------ |
-| Varun Shankar | Team Leader & System Design |
-| Dheeraj Kumar Reddy | Core Backend, AST Analyzers & Evidence Engine |
-| Vishnu Vardhan Reddy | API Integration, Career Service & Testing |
-| Mohith Kumar Naidu | Skill Taxonomy, Roles Architecture & Gemma 4 Integration |
 
----
+| Member | Contribution   |
+| ------ | -------------- |
+| Varun Shankar | Team Leader |
+| Dheeraj Kumar Reddy | Member |
+| Vishnu Vardhan Reddy | Member |
+| Mohith Kumar Naidu | Member |
+
 
 ## Problem Statement
 
 ### The Problem
-Traditional developer resumes, LinkedIn profiles, and GitHub summaries rely on self-declared claims, copy-pasted keywords, and unverified badges. Tech recruiters and engineering managers waste hundreds of hours reviewing candidates who list technologies they barely understand or copied from boilerplate repositories. Meanwhile, generic LLM-based profile summarizers naively scan README files, hallucinating technical competence where no working code exists.
 
-Even when candidates identify their gaps, the path to closing them is broken: standard platforms present passive video tutorials without testing code reasoning, interactive implementation, or verifying actual repository commits.
+Students and early-career developers frequently list technical skills on their resumes that are difficult to verify from their actual work.
 
-### Why We Selected This Problem
-Software engineering is inherently practical. An engineer's competence is reflected in the code they write — how they design modules, structure classes, handle errors, optimize algorithms, write unit tests, and configure production environments.
+A developer may claim:
 
-We built ProofPath to provide:
-1. A **tamper-resistant, deterministic verification engine** that replaces unverified claims with verifiable code evidence.
-2. **Career intelligence** powered by Google Cloud Managed Gemma 4 that maps verified skills to industry roles.
-3. A complete **proof-and-progress loop** that pinpoints exact skill gaps, provides curated learning resources, tests knowledge, evaluates code implementations statically, and verifies practical repository missions to build verifiable career confidence.
+Python
+Machine Learning
+PyTorch
+Docker
+AWS
+MLOps
 
----
+However, their GitHub repositories may contain only partial evidence, tutorial projects, unused dependencies, incomplete implementations, or projects without deployment and testing.
 
-## Solution
+This creates a gap between:
 
-ProofPath inspects a developer's public GitHub repositories, deterministically extracts technical evidence directly from source code, maps those skills to industry career roles, and provides an end-to-end learning and verification ecosystem.
+What a developer claims
+        ≠
+What their code demonstrates
 
-### Complete End-to-End Loop
+Existing career platforms often depend on resumes, questionnaires, self-reported skills, or generic AI recommendations. These approaches can produce advice that is disconnected from the candidate's actual technical experience.
 
-```text
-       GitHub Profile & Public Repositories
-                        ↓
-      Source Code AST & Static Analysis
-                        ↓
-        Deterministic Evidence Extraction (Phase 1)
-       (Level 0–5 Calibrated, Exact Line Traceability)
-                        ↓
-            Career Role Intelligence (Phase 2)
-      (Proven / Partial / Missing, Weighted Readiness)
-                        ↓
-          Google Cloud Managed Gemma 4
-        (Evidence-Grounded Interpretations)
-                        ↓
-              Proof & Progress (Phase 3)
-      ┌─────────────────┴─────────────────┐
-      │  Curated Technical Learning Path  │
-      │  Knowledge Assessment (MCQs)      │
-      │  Code Reasoning & Implementation  │
-      │  Practical Repository Missions    │
-      └─────────────────┬─────────────────┘
-                        ↓
-             Static GitHub Verification
-                        ↓
-       Tri-Pillar Skill Confidence (40 / 30 / 30)
-                        ↓
-    Developer Career Readiness Dashboard (Phase 4)
-```
+Students therefore need a way to answer:
 
-### Tri-Pillar Skill Confidence Formula
+What skills does my code actually demonstrate?
 
-Unlike arbitrary scores, ProofPath computes skill confidence using a deterministic tri-pillar composite formula:
+Which of my claimed skills can I prove?
 
-$$\text{Skill Confidence} = (\text{Code Evidence} \times 0.40) + (\text{Knowledge Quiz} \times 0.30) + (\text{Practical Ability} \times 0.30)$$
+What evidence supports each skill?
 
-- **Code Evidence (40%):** Grounded directly in physical repository code (calibrated from Level 0 to Level 5).
-- **Knowledge Quiz (30%):** Graded via deterministic multi-choice technical assessments.
-- **Practical Ability (30%):** Average of interactive code implementation challenges and statically verified GitHub repository missions.
+What skills am I missing for my target role?
 
----
+What should I build next to become more career-ready?
+
+### Why We Chose This Problem
+
+**Why We Chose This Problem**
+
+Students often have projects but struggle to communicate the technical value of those projects.
+
+A GitHub repository contains much more information than a resume:
+
+Source code
+
+Dependencies
+
+Project structure
+
+APIs
+
+Tests
+
+Configuration
+
+Documentation
+
+CI/CD workflows
+
+Deployment configuration
+
+Development patterns
+
+We wanted to turn this existing technical evidence into meaningful career guidance.
+
+Instead of asking an AI:
+
+"What should this student learn?"
+
+ProofPath asks:
+
+"What does this student's code prove, and what evidence is still missing?"
+
+This makes career advice more transparent, personalized, and actionable.
+
+## **Solution**
+
+ProofPath analyzes a user's GitHub repositories against a selected target role and creates an evidence-backed career readiness profile.
+
+The system follows this workflow:
+
+GitHub Profile
+      ↓
+Repository Collection
+      ↓
+Code & Dependency Analysis
+      ↓
+Evidence Extraction
+      ↓
+Skill Verification
+      ↓
+AI Evidence Reasoning
+      ↓
+Role Readiness Analysis
+      ↓
+Skill Gaps
+      ↓
+Proof Missions
+
+For example, if a user claims to know PyTorch, ProofPath does not automatically accept the claim.
+
+It searches for evidence such as:
+
+torch imports
+nn.Module
+DataLoader
+optimizers
+training loops
+model implementation
+
+If these are found in meaningful implementation contexts, ProofPath can classify the skill as strongly demonstrated.
+
+If the repository only mentions PyTorch in a README, the skill may be classified as weak or unverified.
+
+
+### Key Features
+
+1. **GitHub Code Analysis**
+
+Analyze public repositories and identify technologies, programming languages, frameworks, dependencies, implementation patterns, and engineering practices.
+
+2. **Evidence-Based Skill Detection**
+
+Determine whether a skill is:
+
+Not demonstrated
+
+Claimed only
+
+Supported by dependency evidence
+
+Supported by implementation evidence
+
+Strongly demonstrated
+
+Supported by production/engineering evidence
+
+3. **Claim vs Proof**
+
+Compare user-claimed skills with evidence found in their GitHub repositories.
+
+Example:
+
+Skill
+
+Claim
+
+Evidence
+
+Status
+
+Python
+
+Yes
+
+Strong implementation
+
+🟢 Proven
+
+PyTorch
+
+Yes
+
+Training pipeline
+
+🟢 Proven
+
+Docker
+
+Yes
+
+README only
+
+🟡 Weak
+
+AWS
+
+Yes
+
+No evidence
+
+🔴 Unverified
+
+SQL
+
+Yes
+
+Multiple projects
+
+🟢 Proven
+
+4. **Evidence Explorer**
+
+Every skill assessment can be traced back to the repository and file that produced the evidence.
+
+Skill
+ ↓
+Repository
+ ↓
+File
+ ↓
+Implementation
+ ↓
+Evidence
+
+5. **Role Readiness Analysis**
+
+Compare demonstrated skills against the requirements of a target role such as:
+
+Full-Stack Developer
+
+ML Engineer
+
+Data Analyst
+
+Data Scientist
+
+Backend Developer
+
+Frontend Developer
+
+AI Engineer
+
+DevOps Engineer
+
+Data Engineer
+
+6. **Skill Gap Detection**
+
+Identify the skills that are missing or insufficiently demonstrated for the selected career path.
+
+7. **Proof Missions**
+
+Instead of giving generic advice such as "learn Docker", ProofPath generates practical tasks that use the user's existing projects to create new evidence.
+
+Example:
+
+Proof Mission: Prove Docker proficiency
+
+1. Add a Dockerfile
+2. Containerize the existing application
+3. Add a health endpoint
+4. Add basic tests
+5. Document container execution
+
+8. **Evidence Graph**
+
+Visualize the relationship between:
+
+Target Role
+    ↓
+Required Skill
+    ↓
+Repository
+    ↓
+File
+    ↓
+Code Evidence
+
+9. **AI-Powered Evidence Reasoning**
+
+An open-source/open-weight AI model such as Gemma reasons over structured evidence to explain:
+
+Why a skill is supported
+
+How strong the evidence is
+
+What limitations exist
+
+What evidence is missing
+
+What the developer should build next
+
+The AI interprets evidence rather than inventing it.
+
+10. **Interview Defense Mode**
+
+Generate interview questions based on the user's actual repositories and implementations, helping developers prepare to explain the work they claim on their resumes.
 
 ## Innovation and Differentiation
 
-| Feature | Conventional Resume/AI Platforms | ProofPath |
-| ------- | --------------------------------- | --------- |
-| **Evidence Basis** | Self-reported keywords or READMEs | Physical repository source code |
-| **Analysis Method** | LLM summarization (hallucinates) | Deterministic AST, tokenizer & manifest parsing |
-| **Traceability** | None (opaque claims) | Exact repository file paths and line ranges |
-| **Dependency Weight** | Treated as full competence | Strictly Level 2 (Partial Evidence) |
-| **Career Readiness** | Subjective keyword match | Mathematically weighted scoring (Core 2.0x, Supporting 1.0x) |
-| **AI Role** | Generates claims from thin air | Strictly interprets pre-verified code evidence |
-| **Code Evaluation** | Unsafe sandbox or none | Safe static AST/regex analysis (Zero `eval()` / `exec()`) |
-| **Skill Progression** | Passive certificates | Tri-pillar verified confidence (40% Code, 30% Quiz, 30% Practical) |
-| **AI Resilience** | System breaks if LLM errors | Graceful deterministic fallback ensures 100% uptime |
-| **Mission Verification** | Unverified checkmarks | Real GitHub repository static code verification |
+Most AI career tools follow a model similar to:
 
----
+Resume
+  ↓
+AI
+  ↓
+Generic Career Advice
+
+ProofPath uses an evidence-first approach:
+
+Actual Code
+    ↓
+Evidence
+    ↓
+Skill Verification
+    ↓
+AI Reasoning
+    ↓
+Role Analysis
+    ↓
+Skill Gaps
+    ↓
+Proof Missions
+    ↓
+New Evidence
+
+The central innovation is the Proof Loop.
+
+A missing skill does not simply become a recommendation.
+
+It becomes a practical project mission designed to generate evidence for that skill.
+
+For example:
+
+Docker
+  ↓
+No implementation evidence
+  ↓
+Proof Mission
+  ↓
+Dockerize existing project
+  ↓
+New Docker evidence
+  ↓
+Improved career profile
+
+Core Differentiator
+
+ProofPath doesn't evaluate what you claim. It evaluates what you can prove.
+
+Another important design principle is:
+
+Code proves. AI interprets.
+
+Static analysis and deterministic rules establish factual evidence, while the AI is used for reasoning and personalized recommendations.
+
 
 ## Technical Implementation
 
-### System Architecture
-
-```mermaid
+### Architecture
 flowchart TD
-    User([Developer / Recruiter]) --> FE[ProofPath Platform Frontend\nReact + Vite + Tailwind + Monaco]
-    FE --> API[FastAPI REST API]
-    
-    subgraph "Phase 1: Proof Extraction"
-        API --> GHService[GitHub REST API Service]
-        GHService --> Repos[Public Repositories & Trees]
-        Repos --> Filter[File Prioritizer & Security Filter]
-        Filter --> PyAST[Python AST Analyzer]
-        Filter --> JSTS[JS/TS Tokenizer & Lexer]
-        Filter --> Dep[Dependency Analyzer]
-        Filter --> Fw[Framework Analyzer]
-        PyAST & JSTS & Dep & Fw --> Signals[Code Signals]
-        Signals --> Detector[Skill Detector & Taxonomy]
-        Detector --> Scorer[Evidence Scorer & Line Tracer]
-        Scorer --> EvJSON[Structured Evidence JSON]
-    end
-    
-    subgraph "Phase 2: Career Intelligence"
-        EvJSON --> CareerSvc[Career Intelligence Service]
-        CareerSvc --> Roles[Role Taxonomy & Weighted Scorer]
-        Roles --> Prompt[Evidence-Grounded Prompt Builder]
-        Prompt --> Gemma[Google Cloud Gemma 4\ngemma-4-26b-a4b-it-maas]
-        CareerSvc -.-> Fallback[Deterministic Fallback]
-    end
 
-    subgraph "Phase 3: Proof & Progress Engine"
-        API --> LearningSvc[Learning Roadmap Service]
-        API --> QuizSvc[Quiz & Challenge Service]
-        API --> Evaluator[Static Code Evaluator\nSafe AST & Token Parser]
-        API --> Verifier[GitHub Mission Verifier]
-        API --> ProgressSvc[Progress & Confidence Service]
-        ProgressSvc --> SQLite[(SQLite DB\nSQLAlchemy)]
-    end
-```
+    A[GitHub Username] --> B[GitHub API / Repository Collector]
+
+    B --> C[Repository Analyzer]
+
+    C --> D[Source Code Analysis]
+    C --> E[Dependency Analysis]
+    C --> F[Project Metadata]
+    C --> G[Engineering Analysis]
+
+    D --> H[Evidence Engine]
+    E --> H
+    F --> H
+    G --> H
+
+    H --> I[Skill Detection]
+
+    I --> J[Gemma Evidence Reasoner]
+
+    J --> K[Role Matching Engine]
+
+    K --> L[Role Readiness Score]
+    K --> M[Skill Gap Analysis]
+    K --> N[Claim Verification]
+
+    M --> O[Proof Mission Generator]
+
+    L --> P[Career Report]
+    N --> P
+    O --> P
+
+    P --> Q[Evidence Explorer]
+    P --> R[Evidence Graph]
 
 ### Technology Stack
 
-| Layer | Technologies |
-| ----- | ------------ |
-| **Frontend** | React 18, TypeScript, Vite, Tailwind CSS, Monaco Editor (`@monaco-editor/react`), Lucide React |
-| **Backend** | Python 3.10+, FastAPI, Uvicorn, Pydantic v2, SQLAlchemy 2.0 (SQLite) |
-| **HTTP Clients** | HTTPX (async client with timeouts, retry logic, and rate-limit handling) |
-| **Static Code Parsing** | Python `ast`, Regex Lexer, JSON/TOML parsers, Dockerfile parser |
-| **AI Model** | Google Cloud Managed Gemma 4 (`gemma-4-26b-a4b-it-maas`, location: `global`) |
-| **Database** | SQLite (`proofpath.db`) via SQLAlchemy ORM |
-| **Testing** | Pytest, Pytest-Asyncio (75 automated unit & integration tests, 100% passing) |
 
----
+| Category        | Technologies                |
+| --------------- | --------------------------- |
+| Frontend        | [Technologies / N/A]        |
+| Backend         | [Technologies / N/A]        |
+| Database        | [Technologies / N/A]        |
+| AI / ML         | [Models / frameworks / N/A] |
+| Infrastructure  | [Technologies / N/A]        |
+| APIs / Services | [Services / N/A]            |
+
+
+### How It Works
+
+1. GitHub Collection
+
+The user provides a GitHub username.
+
+ProofPath collects publicly accessible repository information and identifies the most relevant repositories for analysis.
+
+2. Repository Analysis
+
+Each repository is analyzed for:
+
+Programming languages
+
+Frameworks
+
+Libraries
+
+Dependencies
+
+Source code
+
+Project structure
+
+Tests
+
+Documentation
+
+Docker configuration
+
+CI/CD configuration
+
+API implementation
+
+Deployment-related configuration
+
+3. Evidence Extraction
+
+The system converts technical signals into structured evidence.
+
+For example:
+
+{
+  "skill": "PyTorch",
+  "repository": "image-classifier",
+  "file": "train.py",
+  "evidence_type": "implementation",
+  "signals": [
+    "torch.nn.Module",
+    "DataLoader",
+    "optimizer",
+    "training loop"
+  ]
+}
+
+4. Skill Verification
+
+ProofPath determines how strongly the available evidence supports each skill.
+
+A dependency alone is not treated as equivalent to meaningful implementation.
+
+For example:
+
+requirements.txt
+      ↓
+torch
+      ↓
+Dependency Evidence
+
+is weaker than:
+
+model.py
+      ↓
+torch.nn.Module
+      ↓
+training pipeline
+      ↓
+Implementation Evidence
+
+5. AI Evidence Reasoning
+
+Structured evidence is passed to the AI reasoning layer.
+
+The model helps answer:
+
+Does this evidence support the skill?
+
+How strong is the evidence?
+
+What limitations should be communicated?
+
+What additional evidence would strengthen the claim?
+
+What practical project should the developer build next?
+
+The AI is constrained by the evidence collected from the repository.
+
+6. Role Matching
+
+The selected target role contains a set of expected skills and capabilities.
+
+ProofPath compares those requirements with the user's demonstrated evidence.
+
+For example:
+
+Target Role: ML Engineer
+
+Python              ✓ Strong
+Machine Learning    ✓ Strong
+PyTorch             ✓ Strong
+API Development     ◐ Partial
+Docker              ◐ Partial
+Testing             ◐ Partial
+MLOps               ✕ Missing
+Cloud               ✕ Missing
+
+7. Proof Mission Generation
+
+The system converts important gaps into practical tasks.
+
+Example:
+
+Gap:
+Deployment
+
+Existing Evidence:
+ML model + Python project
+
+Proof Mission:
+
+Build a FastAPI inference endpoint,
+containerize it using Docker,
+add automated tests,
+and document deployment.
+
+### Technical Decisions
+
+Evidence Before AI
+
+We intentionally separate factual analysis from AI reasoning.
+
+Static Analysis
+      ↓
+Facts
+      ↓
+Evidence
+      ↓
+AI Reasoning
+
+This reduces the risk of hallucinated career claims.
+
+Evidence-Based Scoring
+
+Skills are not treated as simple yes/no values.
+
+The system considers different levels of evidence, ranging from claims and dependency signals to implementation and production-level evidence.
+
+Repository-Level Traceability
+
+Every major assessment should be traceable back to a repository and file whenever possible.
+
+This makes the system explainable and allows users to verify the result themselves.
+
+Role-Specific Analysis
+
+Career readiness is contextual.
+
+A repository may demonstrate strong frontend skills but provide little evidence for an ML Engineer role.
+
+Therefore, ProofPath evaluates skills relative to the user's selected target role.
+
 
 ## Implementation During the Hackathon
 
-The Rebels team built all 4 phases during the Hack Day:
+During the Hack Day, the team will build the core ProofPath workflow from GitHub analysis to evidence-backed career recommendations.
 
-### Phase 1: Proof Extraction Engine
-- **GitHub Pipeline:** Asynchronous `GitHubService` with recursive Git tree queries and rate-limit adaptation.
-- **AST Code Analyzers:** Python AST analyzer checking class inheritance, decorators, training loops, and library calls without code execution.
-- **JavaScript & TypeScript Tokenizer:** Parser for React hooks, TS interfaces, Express routes, and Next.js structures.
-- **Dependency & Manifest Engine:** Analyzes `requirements.txt`, `package.json`, `pyproject.toml`, and `Dockerfile`.
-- **Evidence Calibration:** Calibrated 0–5 scoring scale with exact file path and line number traceability.
+The main implementation will focus on:
 
-### Phase 2: Career Intelligence & Gemma 4
-- **Career Roles Architecture:** 6 industry roles with core (2.0x) and supporting (1.0x) weights in `data/roles.json`.
-- **Deterministic Readiness Scorer:** Computes weighted role readiness (0–100%) and categorizes skills into Proven, Partial, or Missing.
-- **Google Cloud Managed Gemma 4:** Integrated `gemma-4-26b-a4b-it-maas` with strict prompt guardrails ensuring AI never alters readiness scores or fabricates evidence.
-- **Deterministic Fallback:** Robust fallback mode that produces grounded assessments even when AI is unconfigured or offline.
+GitHub repository collection
 
-### Phase 3: Proof & Progress Engine
-- **Static Code Evaluator:** 100% safe, deterministic code evaluator using AST inspections and token validation. Zero `eval()` or `exec()`.
-- **3-Dimension Assessment Catalog:** Knowledge MCQs, Code Reasoning questions, Code Implementation specs, and Practical Missions across core skills.
-- **Curated Learning Paths:** Gap-prioritized learning roadmaps linking directly to official documentation, guides, and tutorials.
-- **Static GitHub Mission Verifier:** Reuses Phase 1 AST analyzers to inspect candidate repositories and verify completed missions.
-- **Tri-Pillar Confidence Tracker:** Formula-driven composite confidence scoring with SQLite persistence.
-- **Next Best Action Generator:** Data-driven prioritization engine recommending the highest-impact action to advance career readiness.
+Source-code and dependency analysis
 
-### Phase 4: Career Readiness Platform (Frontend)
-- **Developer-First UI:** Clean, linear-aesthetic dashboard built with React, Vite, and Tailwind CSS.
-- **Dark/Light Mode:** Seamless theme toggle with high-contrast accessibility tokens and `localStorage` persistence.
-- **Interactive Readiness Meter:** Visualizes overall readiness score and Core vs. Supporting breakdown.
-- **Skill Confidence Cards:** Shows 5-dot strength meters, Proven/Partial/Missing badges, and direct CTAs to Learn, Quiz, or Code.
-- **Monaco Code Editor:** Embedded VS Code editor (`@monaco-editor/react`) for completing live code implementation challenges with instant static feedback.
-- **Evidence Drawer:** Traceable code viewer inspecting exact file paths, line numbers, and extracted signals.
-- **Learning Roadmap & Mission Verification:** Step-by-step curriculum with real technical links and repository verification submission.
+Evidence extraction
 
-### Product Quality & Assessment Engine Pass
-- **Adaptive Assessment Engine & 2,520-Question Bank:** 105 validated questions per skill across all 24 skills (Beginner, Intermediate, Advanced, Expert) with streak-based dynamic difficulty leveling (streak $\ge 2$ correct promotes difficulty, errors demote).
-- **Mathematical Foundations:** Added Linear Algebra, Multivariate Calculus, Probability, and Optimization into skills and ML/AI career roles (`ml_engineer`, `data_scientist`, `ai_engineer`).
-- **Real GitHub Profile & Repository Explorer:** Live profile card (avatar, bio, total vs. analyzed public repos) and repository explorer tab with stars, forks, files scanned, and detected skills.
-- **Coverage Transparency Banner:** Clear statement ("Analyzed X of Y public repositories, excluding forks & non-code") ensuring complete honesty and reproducibility.
-- **High-Quality Curated Learning Resources:** 42 verified resources with official documentation and top technical English YouTube creators (3Blue1Brown, StatQuest, FreeCodeCamp, Traversy Media, sentdex).
+Skill detection
 
----
+Role matching
+
+AI-powered evidence reasoning
+
+Evidence-backed career report
+
+Skill gap analysis
+
+Proof Mission generation
+
+Interactive user interface
+
+The MVP will prioritize a complete working flow over supporting a very large number of programming languages or career roles.
+
+
+### Team Contributions
+
+- **Varun Shankar:** [Contribution]
+- **Dheeraj Kumar Reddy:** [Contribution]
+- **Vishnu Vardhan Reddy:** [Contribution]
+- **Mohith Kumar Naidu:** [Contribution]
+
+## Working Application
+
+**Live Application:** [Live URL]
+
+
+The application should allow users to:
+
+Enter a GitHub username.
+
+Select a target career role.
+
+Start the repository analysis.
+
+View the detected skills.
+
+Inspect evidence behind each skill.
+
+View their role readiness profile.
+
+Identify missing or weak skills.
+
+Receive personalized Proof Missions.
+
+## Demo Video
+
+**Demo Video:** [Video URL]
+
+[Provide a short demonstration of the working project, covering the main user flow and important functionality.]
 
 ## Open Source and AI Usage
 
 ### AI / Models
-- **Google Cloud Managed Gemma 4 (`gemma-4-26b-a4b-it-maas`):**
-  - **Role:** Generates evidence-grounded qualitative career insights (strengths, gaps, career advice) based solely on verified Phase 1 code signals.
-  - **Deployment:** Google Cloud Vertex AI Model Garden / MaaS (`global` location).
-  - **Grounding Guardrails:** Gemma is strictly prohibited from altering deterministic readiness scores or inventing unverified skill claims.
-  - **Fallback:** Complete offline deterministic fallback when AI is unavailable.
+
+- **[Model]:** [How it is used]
 
 ### Open Source Components
-- **FastAPI & Uvicorn:** REST API routing and asynchronous ASGI server.
-- **Pydantic v2:** Strict request/response validation and serialization.
-- **SQLAlchemy:** ORM layer for tracking assessments, progress, and user profiles.
-- **React 18 & Vite:** Modern, fast frontend build tooling and component rendering.
-- **Tailwind CSS:** Developer-focused, accessible styling system.
-- **Monaco Editor (`@monaco-editor/react`):** Browser-based VS Code editing experience.
-- **Lucide React:** Lightweight, clean icon set.
-- **Pytest & Pytest-Asyncio:** Unit and integration test suite.
 
----
+- **[Library / Framework]:** [Purpose]
+- **[Dataset]:** [Purpose]
+- **[API / Service]:** [Purpose]
+
+[Include relevant licenses, attribution, and acknowledgements for external components.]
 
 ## Setup and Usage
 
 ### Prerequisites
-- Python 3.10+
-- Node.js 18+ and npm
-- Git
 
-### 1. Clone & Setup Backend
+- [Requirement]
+- [Requirement]
+
+### Installation
 
 ```bash
-git clone <repository-url>
-cd hack
-
-# Create and activate virtual environment
-python -m venv .venv
-
-# Windows PowerShell:
-.\.venv\Scripts\Activate.ps1
-
-# Linux / macOS:
-source .venv/bin/activate
-
-# Install backend dependencies
-pip install -r backend/requirements.txt
+git clone [repository-url]
+cd [project-directory]
+[installation-command]
 ```
 
-### 2. Configure Environment Variables
-Copy `.env.example` to `.env`:
+### Environment Variables
+
 ```env
-# GitHub Configuration
-GITHUB_TOKEN=your_optional_github_token_here
-PORT=8000
-
-# Limits
-MAX_REPOSITORIES=5
-MAX_FILES_PER_REPOSITORY=40
-MAX_FILE_SIZE=100000
-MAX_TOTAL_SOURCE_SIZE=1000000
-GITHUB_API_TIMEOUT=15.0
-
-# Google Cloud Managed Gemma 4 Configuration
-GOOGLE_CLOUD_PROJECT=your-project-id
-GOOGLE_CLOUD_LOCATION=global
-GEMMA_MODEL=gemma-4-26b-a4b-it-maas
-GEMMA_API_KEY=your_optional_gemma_api_key
-GEMMA_TIMEOUT=30.0
+[VARIABLE_NAME]=[value]
 ```
 
-### 3. Setup Frontend
+
+
+### Running the Project
 
 ```bash
-cd frontend
-npm install
-cd ..
+[run-command]
 ```
 
-### 4. Running the Complete Application
+### Usage
 
-**Terminal 1 — Backend:**
-```bash
-# Windows PowerShell
-$env:PYTHONPATH="backend"
-.\.venv\Scripts\uvicorn app.main:app --reload --port 8000
+[Explain the basic steps required to use the project.]
 
-# Linux / macOS
-PYTHONPATH=backend uvicorn app.main:app --reload --port 8000
-```
-*Backend API will be live at `http://localhost:8000` (Docs: `http://localhost:8000/docs`).*
+## Devpost Submission
 
-**Terminal 2 — Frontend:**
-```bash
-cd frontend
-npm run dev
-```
-*Frontend application will be live at `http://localhost:5173`.*
+**Devpost Project:** [Devpost Project URL]
 
----
-
-## Running Automated Tests
-
-Run the full suite of **68 tests** covering all phases:
-
-```bash
-# Windows PowerShell
-$env:PYTHONPATH="backend"
-.\.venv\Scripts\python -m pytest backend/tests -v
-
-# Linux / macOS
-PYTHONPATH=backend pytest backend/tests -v
-```
-
----
-
-## API Endpoints
-
-### Phase 1 & 2: Proof & Career Intelligence
-- `GET /health` — Health check & system status
-- `POST /api/github/analyze` — Deterministic GitHub repository analysis & proof extraction
-- `GET /api/analysis/roles` — List supported career roles
-- `GET /api/analysis/roles/{role_id}` — Get details and skill requirements for a role
-- `POST /api/analysis/career` — Run end-to-end career analysis with Gemma 4 interpretation
-
-### Phase 3: Proof & Progress Engine
-- `GET /api/quiz/generate?skill={skill}&role_id={role_id}` — Generate 3-dimension skill assessment
-- `POST /api/quiz/submit` — Submit MCQ knowledge quiz for deterministic grading
-- `POST /api/code-challenges/submit` — Submit code challenge for safe static AST evaluation
-- `GET /api/learning/{skill}` — Retrieve curated learning resources for a skill
-- `GET /api/learning-path/{role_id}` — Generate prioritized learning roadmap for a career role
-- `POST /api/tasks/verify` — Statically verify a GitHub repository against a practical mission
-- `GET /api/progress/{username}` — Get comprehensive progress & tri-pillar confidence breakdown
-- `GET /api/recommendations/{username}?role_id={role_id}` — Get data-driven Next Best Actions
-
----
-
-## Demonstration Walkthrough
-
-1. **Enter GitHub Profile:**
-   - Launch the frontend at `http://localhost:5173`.
-   - Enter a GitHub username (e.g., `torvalds` or your own username) and select a target career role (e.g., `Backend Engineer`).
-   - Click **Analyze Profile & Build Proof**.
-
-2. **Inspect Career Readiness Dashboard:**
-   - View the calculated **Readiness Meter** showing total readiness percentage, Core skills readiness (2.0x weight), and Supporting skills readiness (1.0x weight).
-   - Review the **Google Cloud Gemma 4** grounded AI assessment detailing your verified strengths and primary gaps.
-
-3. **Explore Code Evidence:**
-   - On any skill card (e.g., `Python`), click **View Evidence**.
-   - Inspect the exact repository, file path, line numbers, and extracted signals that prove the skill.
-
-4. **Take a Skill Assessment:**
-   - Click **Take Assessment** on a skill card.
-   - Answer the Knowledge MCQs and Code Reasoning questions.
-   - Write real code in the embedded **Monaco Editor** to solve the Code Challenge.
-   - Click **Evaluate Code** to receive instant, safe static AST feedback.
-
-5. **Follow Curated Learning & Mission:**
-   - Navigate to the **Learning Path** tab to review the gap-prioritized roadmap.
-   - Access official documentation and tutorials.
-   - Submit a practical repository mission for static verification on GitHub.
-
-6. **Track Composite Confidence:**
-   - Switch to the **Skill Confidence** tab to see your updated 40/30/30 composite confidence score advancing from missing/partial to proven.
-
----
-
-## Challenges and Learnings
-
-- **Rate Limit Constraints:** GitHub restricts unauthenticated REST requests to 60/hour. We resolved this by querying the Git Trees API recursively (1 request per repo rather than 1 request per directory) and supporting token-based requests.
-- **Safe Code Evaluation Without Execution:** Evaluating candidate code in hackathons without full Docker sandboxing is dangerous. We innovated by developing a static AST and token evaluator that safely checks AST node types, functions, parameter names, and syntax without ever calling `eval()` or `exec()`.
-- **AI Hallucination Containment:** LLMs tend to assume full competency from simple keywords. We constrained Gemma 4 strictly to pre-extracted code evidence and enforced an automatic deterministic fallback when external AI is offline.
-- **Tri-Pillar Formula Balance:** Bridging repository evidence with active assessments required balanced weighting. The 40% Code / 30% Quiz / 30% Practical formula ensures neither pure theoretical test-taking nor unmaintained legacy repositories dominate a developer's readiness score.
-
----
+[Add the link to the team's Devpost submission. Ensure the Devpost project page is complete and contains the required project information, links, media, and team details.]
 
 ## Credits and License
 
 ### Credits
-- Built for **Hacktoberfest Hack Day — Coimbatore 2026** organized by INIT CLUB × iDEA CLUB in collaboration with Major League Hacking (MLH).
-- Inspired by the open-source software verification community and the principle of evidence-based hiring.
+
+[Credit libraries, frameworks, datasets, models, APIs, contributors, and other external resources used.]
 
 ### License
-This project is licensed under the MIT License.
+
+[License name and/or link.]
+
+## Submission Checklist
+
+- [ ] Project title and description added
+- [ ] All team members listed
+- [ ] Problem clearly explained
+- [ ] Reason for choosing the problem explained
+- [ ] Solution and key features documented
+- [ ] Innovation and differentiation explained
+- [ ] Architecture included
+- [ ] Technical implementation documented
+- [ ] Work completed during the hackathon documented
+- [ ] Team contributions documented
+- [ ] Working application is functional
+- [ ] Live application link added where applicable
+- [ ] Demo video added
+- [ ] AI and open-source components documented
+- [ ] Setup and usage instructions tested
+- [ ] Challenges and learnings documented
+- [ ] Devpost submission completed
+- [ ] Devpost link added
+- [ ] Credits added
+- [ ] License added
+- [ ] Repository is organized and complete
