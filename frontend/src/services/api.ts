@@ -14,7 +14,8 @@ import {
   NextBestAction,
 } from '../types';
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000';
+const API_BASE_URL =
+  import.meta.env.VITE_API_BASE_URL || (import.meta.env.PROD ? '' : 'http://localhost:8000');
 
 async function handleResponse<T>(res: Response): Promise<T> {
   if (!res.ok) {

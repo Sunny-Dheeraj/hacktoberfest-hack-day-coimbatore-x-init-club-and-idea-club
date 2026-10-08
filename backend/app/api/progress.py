@@ -169,11 +169,17 @@ async def get_question_bank_summary(skill: str):
 # Quiz & Code Challenge Endpoints (Compatible with GET & POST)
 # ---------------------------------------------------------------------------
 
-@router.api_route(
+@router.get(
     "/quiz/generate",
-    methods=["GET", "POST"],
     response_model=FullSkillAssessment,
     summary="Generate 3-dimension assessment (Knowledge, Code Reasoning, Implementation)",
+    operation_id="generate_skill_quiz_get",
+)
+@router.post(
+    "/quiz/generate",
+    response_model=FullSkillAssessment,
+    summary="Generate 3-dimension assessment (Knowledge, Code Reasoning, Implementation)",
+    operation_id="generate_skill_quiz_post",
 )
 async def generate_skill_quiz(skill: str = Query(..., description="Target skill name")):
     """Generates 3-dimension assessment testing conceptual knowledge, snippet reasoning, and coding."""
@@ -200,11 +206,17 @@ async def submit_quiz(request: QuizSubmissionRequest):
     return result
 
 
-@router.api_route(
+@router.get(
     "/code-challenges/generate",
-    methods=["GET", "POST"],
     response_model=CodeChallenge,
     summary="Retrieve coding challenge for Monaco editor",
+    operation_id="generate_code_challenge_get",
+)
+@router.post(
+    "/code-challenges/generate",
+    response_model=CodeChallenge,
+    summary="Retrieve coding challenge for Monaco editor",
+    operation_id="generate_code_challenge_post",
 )
 async def generate_code_challenge(skill: str = Query(..., description="Target skill")):
     """Retrieves coding implementation challenge with starter code and criteria."""
@@ -269,11 +281,17 @@ async def get_role_learning_path(
 # Practical Missions & Verification Endpoints (Compatible with GET & POST)
 # ---------------------------------------------------------------------------
 
-@router.api_route(
+@router.get(
     "/tasks/generate",
-    methods=["GET", "POST"],
     response_model=PracticalTask,
     summary="Generate practical mission specifications for a skill",
+    operation_id="generate_practical_task_get",
+)
+@router.post(
+    "/tasks/generate",
+    response_model=PracticalTask,
+    summary="Generate practical mission specifications for a skill",
+    operation_id="generate_practical_task_post",
 )
 async def generate_practical_task(skill: str = Query(..., description="Target skill")):
     """Generates measurable GitHub practical mission with verification criteria."""
