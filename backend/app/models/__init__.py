@@ -9,6 +9,16 @@ from app.models.evidence import (
     GitHubProfile,
     GitHubRepository,
 )
+from app.models.career import (
+    SkillClassification,
+    RoleSkillRequirement,
+    CareerRole,
+    SkillAssessment,
+    ReadinessScore,
+    AIInsight,
+    RoleAnalysis,
+    CareerAnalysis,
+)
 
 __all__ = [
     "EvidenceStatus",
@@ -18,4 +28,12 @@ __all__ = [
     "SkillSummary",
     "GitHubProfile",
     "GitHubRepository",
+    "SkillClassification",
+    "RoleSkillRequirement",
+    "CareerRole",
+    "SkillAssessment",
+    "ReadinessScore",
+    "AIInsight",
+    "RoleAnalysis",
+    "CareerAnalysis",
 ]

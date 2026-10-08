@@ -1,0 +1,129 @@
+{
+  "roles": [
+    {
+      "id": "ml_engineer",
+      "title": "Machine Learning Engineer",
+      "description": "Designs, builds, and deploys machine learning models and pipelines",
+      "core_skills": [
+        {"skill": "Python", "weight": 2.0},
+        {"skill": "Machine Learning", "weight": 2.0},
+        {"skill": "PyTorch", "weight": 2.0},
+        {"skill": "Scikit-learn", "weight": 2.0},
+        {"skill": "Pandas", "weight": 2.0}
+      ],
+      "supporting_skills": [
+        {"skill": "Deep Learning", "weight": 1.0},
+        {"skill": "TensorFlow", "weight": 1.0},
+        {"skill": "NumPy", "weight": 1.0},
+        {"skill": "Docker", "weight": 1.0},
+        {"skill": "SQL", "weight": 1.0},
+        {"skill": "Git", "weight": 1.0},
+        {"skill": "REST API", "weight": 1.0},
+        {"skill": "Data Analysis", "weight": 1.0},
+        {"skill": "Transformers", "weight": 1.0},
+        {"skill": "OpenCV", "weight": 1.0}
+      ]
+    },
+    {
+      "id": "full_stack_developer",
+      "title": "Full Stack Developer",
+      "description": "Builds end-to-end web applications spanning frontend and backend",
+      "core_skills": [
+        {"skill": "JavaScript", "weight": 2.0},
+        {"skill": "React", "weight": 2.0},
+        {"skill": "Node.js", "weight": 2.0},
+        {"skill": "REST API", "weight": 2.0},
+        {"skill": "SQL", "weight": 2.0}
+      ],
+      "supporting_skills": [
+        {"skill": "TypeScript", "weight": 1.0},
+        {"skill": "Python", "weight": 1.0},
+        {"skill": "FastAPI", "weight": 1.0},
+        {"skill": "Flask", "weight": 1.0},
+        {"skill": "Django", "weight": 1.0},
+        {"skill": "Docker", "weight": 1.0},
+        {"skill": "Git", "weight": 1.0}
+      ]
+    },
+    {
+      "id": "data_scientist",
+      "title": "Data Scientist",
+      "description": "Extracts insights from data through statistical analysis, visualization, and modeling",
+      "core_skills": [
+        {"skill": "Python", "weight": 2.0},
+        {"skill": "Pandas", "weight": 2.0},
+        {"skill": "NumPy", "weight": 2.0},
+        {"skill": "Data Analysis", "weight": 2.0},
+        {"skill": "SQL", "weight": 2.0}
+      ],
+      "supporting_skills": [
+        {"skill": "Scikit-learn", "weight": 1.0},
+        {"skill": "Machine Learning", "weight": 1.0},
+        {"skill": "Deep Learning", "weight": 1.0},
+        {"skill": "PyTorch", "weight": 1.0},
+        {"skill": "TensorFlow", "weight": 1.0},
+        {"skill": "Git", "weight": 1.0},
+        {"skill": "Docker", "weight": 1.0}
+      ]
+    },
+    {
+      "id": "backend_engineer",
+      "title": "Backend Engineer",
+      "description": "Designs and implements server-side applications, APIs, and data systems",
+      "core_skills": [
+        {"skill": "Python", "weight": 2.0},
+        {"skill": "REST API", "weight": 2.0},
+        {"skill": "SQL", "weight": 2.0},
+        {"skill": "FastAPI", "weight": 2.0},
+        {"skill": "Docker", "weight": 2.0}
+      ],
+      "supporting_skills": [
+        {"skill": "Flask", "weight": 1.0},
+        {"skill": "Django", "weight": 1.0},
+        {"skill": "Git", "weight": 1.0},
+        {"skill": "JavaScript", "weight": 1.0},
+        {"skill": "Node.js", "weight": 1.0},
+        {"skill": "TypeScript", "weight": 1.0}
+      ]
+    },
+    {
+      "id": "ai_engineer",
+      "title": "AI Engineer",
+      "description": "Develops and deploys AI-powered applications integrating large language models and deep learning",
+      "core_skills": [
+        {"skill": "Python", "weight": 2.0},
+        {"skill": "Deep Learning", "weight": 2.0},
+        {"skill": "Transformers", "weight": 2.0},
+        {"skill": "PyTorch", "weight": 2.0},
+        {"skill": "Machine Learning", "weight": 2.0}
+      ],
+      "supporting_skills": [
+        {"skill": "TensorFlow", "weight": 1.0},
+        {"skill": "REST API", "weight": 1.0},
+        {"skill": "Docker", "weight": 1.0},
+        {"skill": "FastAPI", "weight": 1.0},
+        {"skill": "Git", "weight": 1.0},
+        {"skill": "NumPy", "weight": 1.0},
+        {"skill": "Pandas", "weight": 1.0},
+        {"skill": "Data Analysis", "weight": 1.0}
+      ]
+    },
+    {
+      "id": "frontend_developer",
+      "title": "Frontend Developer",
+      "description": "Creates user interfaces and interactive web experiences",
+      "core_skills": [
+        {"skill": "JavaScript", "weight": 2.0},
+        {"skill": "React", "weight": 2.0},
+        {"skill": "TypeScript", "weight": 2.0},
+        {"skill": "REST API", "weight": 2.0},
+        {"skill": "Git", "weight": 2.0}
+      ],
+      "supporting_skills": [
+        {"skill": "Node.js", "weight": 1.0},
+        {"skill": "Python", "weight": 1.0},
+        {"skill": "Docker", "weight": 1.0}
+      ]
+    }
+  ]
+}
