@@ -9,7 +9,7 @@ interface HomeProps {
 }
 
 export const Home: React.FC<HomeProps> = ({ onAnalyze, loading }) => {
-  const [username, setUsername] = useState('torvalds');
+  const [username, setUsername] = useState('');
   const [roles, setRoles] = useState<RoleSummary[]>([]);
   const [selectedRole, setSelectedRole] = useState('ml_engineer');
   const [fetchingRoles, setFetchingRoles] = useState(true);
@@ -52,7 +52,7 @@ export const Home: React.FC<HomeProps> = ({ onAnalyze, loading }) => {
           Prove your skills through your code.
         </h1>
 
-        <p className="max-w-xl mx-auto text-sm sm:text-base text-gray-600 dark:text-dark-muted leading-relaxed">
+        <p className="max-w-xl mx-auto text-sm sm:text-base text-gray-600 dark:text-gray-300 leading-relaxed">
           ProofPath deterministically analyzes your public GitHub repositories, uncovers verified code evidence, benchmarks your readiness against industry career roles, and tests missing skills.
         </p>
       </div>
@@ -62,7 +62,7 @@ export const Home: React.FC<HomeProps> = ({ onAnalyze, loading }) => {
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-mono font-semibold uppercase tracking-wider text-gray-700 dark:text-dark-text mb-1.5">
+              <label className="block text-xs font-mono font-semibold uppercase tracking-wider text-gray-700 dark:text-gray-200 mb-1.5">
                 GitHub Username
               </label>
               <div className="relative">
@@ -71,23 +71,23 @@ export const Home: React.FC<HomeProps> = ({ onAnalyze, loading }) => {
                   type="text"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
-                  placeholder="e.g. torvalds"
+                  placeholder="Enter your GitHub username"
                   required
                   disabled={loading}
-                  className="w-full pl-8 pr-3 py-2.5 text-sm font-mono bg-gray-50 dark:bg-dark-bg border border-gray-300 dark:border-dark-border rounded-md text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-green-500 disabled:opacity-50"
+                  className="w-full pl-8 pr-3 py-2.5 text-sm font-mono bg-white dark:bg-dark-bg border border-gray-300 dark:border-dark-border rounded-md text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-green-500 disabled:opacity-50"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-xs font-mono font-semibold uppercase tracking-wider text-gray-700 dark:text-dark-text mb-1.5">
+              <label className="block text-xs font-mono font-semibold uppercase tracking-wider text-gray-700 dark:text-gray-200 mb-1.5">
                 Target Career Role
               </label>
               <select
                 value={selectedRole}
                 onChange={(e) => setSelectedRole(e.target.value)}
                 disabled={loading || fetchingRoles}
-                className="w-full px-3 py-2.5 text-sm bg-gray-50 dark:bg-dark-bg border border-gray-300 dark:border-dark-border rounded-md text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-green-500 disabled:opacity-50"
+                className="w-full px-3 py-2.5 text-sm bg-white dark:bg-dark-bg border border-gray-300 dark:border-dark-border rounded-md text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-green-500 disabled:opacity-50"
               >
                 {roles.map((r) => (
                   <option key={r.id} value={r.id}>
@@ -96,21 +96,6 @@ export const Home: React.FC<HomeProps> = ({ onAnalyze, loading }) => {
                 ))}
               </select>
             </div>
-          </div>
-
-          {/* Quick Demo Pre-fills */}
-          <div className="flex items-center space-x-2 text-xs text-gray-500 dark:text-dark-muted pt-1">
-            <span className="font-mono text-[11px]">Quick samples:</span>
-            {['torvalds', 'tiangolo', 'octocat'].map((u) => (
-              <button
-                key={u}
-                type="button"
-                onClick={() => setUsername(u)}
-                className="font-mono text-xs text-blue-600 dark:text-blue-400 hover:underline"
-              >
-                @{u}
-              </button>
-            ))}
           </div>
 
           <button

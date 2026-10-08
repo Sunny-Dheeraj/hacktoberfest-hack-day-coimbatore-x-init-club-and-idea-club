@@ -17,6 +17,8 @@ import {
   EvidenceItem,
   NextBestAction,
 } from './types';
+import { UserProfileCard } from './components/dashboard/UserProfileCard';
+import { RepositoryExplorer } from './components/dashboard/RepositoryExplorer';
 import { Filter, AlertCircle, ArrowLeft } from 'lucide-react';
 
 export const App: React.FC = () => {
@@ -130,6 +132,17 @@ export const App: React.FC = () => {
             {/* VIEW 1: Dashboard */}
             {currentTab === 'dashboard' && activeRoleAnalysis && (
               <div className="space-y-6 animate-fade-in">
+                {/* 0. Real GitHub Profile & Coverage Card */}
+                <UserProfileCard
+                  profile={analysis.profile}
+                  username={username}
+                  roleTitle={activeRoleAnalysis.role.title}
+                  repositoriesAnalyzed={analysis.repositories_analyzed || analysis.repositories?.length || 0}
+                  totalPublicRepos={analysis.total_public_repos || analysis.profile?.public_repos || 0}
+                  evidenceCount={analysis.phase1_evidence_count || 0}
+                  coverageSummary={analysis.coverage_summary}
+                />
+
                 {/* 1. Readiness Meter */}
                 <ReadinessMeter
                   readiness={activeRoleAnalysis.readiness}
@@ -198,6 +211,19 @@ export const App: React.FC = () => {
                     ))}
                   </div>
                 </div>
+              </div>
+            )}
+
+            {/* VIEW: Repository Explorer */}
+            {currentTab === 'repos' && (
+              <div className="space-y-6 animate-fade-in">
+                <RepositoryExplorer
+                  repositories={analysis.repositories || []}
+                  username={username}
+                  onSelectSkill={(skill) => {
+                    handleViewEvidence(skill);
+                  }}
+                />
               </div>
             )}
 

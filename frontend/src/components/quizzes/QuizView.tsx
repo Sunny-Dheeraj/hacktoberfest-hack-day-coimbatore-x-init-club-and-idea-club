@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Editor from '@monaco-editor/react';
 import { api } from '../../services/api';
+import { AdaptiveQuizView } from './AdaptiveQuizView';
 import {
   FullSkillAssessment,
   QuizResultResponse,
@@ -26,6 +27,7 @@ interface QuizViewProps {
 }
 
 export const QuizView: React.FC<QuizViewProps> = ({ skill, username, onAssessmentCompleted }) => {
+  const [viewMode, setViewMode] = useState<'adaptive' | '3d'>('adaptive');
   const [assessment, setAssessment] = useState<FullSkillAssessment | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -106,31 +108,56 @@ export const QuizView: React.FC<QuizViewProps> = ({ skill, username, onAssessmen
     }
   };
 
-  if (loading) {
-    return (
-      <div className="flex flex-col items-center justify-center py-20 text-gray-500 dark:text-dark-muted">
-        <Loader2 className="w-8 h-8 animate-spin text-green-600 mb-2" />
-        <p className="text-sm font-mono">Generating 3-dimension assessment for {skill}...</p>
-      </div>
-    );
-  }
-
-  if (error || !assessment) {
-    return (
-      <div className="bg-rose-50 dark:bg-rose-950/30 border border-rose-200 dark:border-rose-900/60 rounded-lg p-5 text-center">
-        <p className="text-sm text-rose-700 dark:text-rose-400 font-medium mb-3">{error || 'Assessment not available.'}</p>
-        <button
-          onClick={loadAssessment}
-          className="px-4 py-1.5 rounded-md bg-gray-900 dark:bg-white text-white dark:text-gray-900 text-xs font-medium"
-        >
-          Retry
-        </button>
-      </div>
-    );
-  }
-
   return (
     <div className="max-w-4xl mx-auto space-y-6">
+      {/* Assessment Mode Switcher */}
+      <div className="bg-white dark:bg-dark-card border border-gray-200 dark:border-dark-border rounded-lg p-2.5 flex flex-col sm:flex-row sm:items-center justify-between gap-2 shadow-xs">
+        <div className="flex items-center space-x-2">
+          <button
+            onClick={() => setViewMode('adaptive')}
+            className={`px-3 py-1.5 rounded-md text-xs font-medium transition-colors ${
+              viewMode === 'adaptive'
+                ? 'bg-green-600 text-white font-semibold shadow-xs'
+                : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'
+            }`}
+          >
+            Adaptive Engine (100+ Question Bank)
+          </button>
+          <button
+            onClick={() => setViewMode('3d')}
+            className={`px-3 py-1.5 rounded-md text-xs font-medium transition-colors ${
+              viewMode === '3d'
+                ? 'bg-green-600 text-white font-semibold shadow-xs'
+                : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'
+            }`}
+          >
+            3-Tier Assessment (with Monaco Editor)
+          </button>
+        </div>
+        <span className="text-[11px] font-mono text-gray-400">
+          Candidate: @{username} • Skill: {skill}
+        </span>
+      </div>
+
+      {viewMode === 'adaptive' ? (
+        <AdaptiveQuizView skill={skill} username={username} />
+      ) : loading ? (
+        <div className="flex flex-col items-center justify-center py-20 text-gray-500 dark:text-dark-muted">
+          <Loader2 className="w-8 h-8 animate-spin text-green-600 mb-2" />
+          <p className="text-sm font-mono">Generating 3-dimension assessment for {skill}...</p>
+        </div>
+      ) : error || !assessment ? (
+        <div className="bg-rose-50 dark:bg-rose-950/30 border border-rose-200 dark:border-rose-900/60 rounded-lg p-5 text-center">
+          <p className="text-sm text-rose-700 dark:text-rose-400 font-medium mb-3">{error || 'Assessment not available.'}</p>
+          <button
+            onClick={loadAssessment}
+            className="px-4 py-1.5 rounded-md bg-gray-900 dark:bg-white text-white dark:text-gray-900 text-xs font-medium"
+          >
+            Retry
+          </button>
+        </div>
+      ) : (
+        <div className="space-y-6">
       {/* Assessment Header & 3-Step Breadcrumb */}
       <div className="bg-white dark:bg-dark-card border border-gray-200 dark:border-dark-border rounded-lg p-5">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
@@ -506,6 +533,8 @@ export const QuizView: React.FC<QuizViewProps> = ({ skill, username, onAssessmen
               Retake Assessment
             </button>
           </div>
+        </div>
+      )}
         </div>
       )}
     </div>

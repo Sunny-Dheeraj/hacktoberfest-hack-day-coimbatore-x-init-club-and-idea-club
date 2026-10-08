@@ -152,7 +152,7 @@ flowchart TD
 | **Static Code Parsing** | Python `ast`, Regex Lexer, JSON/TOML parsers, Dockerfile parser |
 | **AI Model** | Google Cloud Managed Gemma 4 (`gemma-4-26b-a4b-it-maas`, location: `global`) |
 | **Database** | SQLite (`proofpath.db`) via SQLAlchemy ORM |
-| **Testing** | Pytest, Pytest-Asyncio (68 automated unit & integration tests) |
+| **Testing** | Pytest, Pytest-Asyncio (75 automated unit & integration tests, 100% passing) |
 
 ---
 
@@ -183,12 +183,19 @@ The Rebels team built all 4 phases during the Hack Day:
 
 ### Phase 4: Career Readiness Platform (Frontend)
 - **Developer-First UI:** Clean, linear-aesthetic dashboard built with React, Vite, and Tailwind CSS.
-- **Dark/Light Mode:** Seamless theme toggle with `localStorage` persistence.
+- **Dark/Light Mode:** Seamless theme toggle with high-contrast accessibility tokens and `localStorage` persistence.
 - **Interactive Readiness Meter:** Visualizes overall readiness score and Core vs. Supporting breakdown.
 - **Skill Confidence Cards:** Shows 5-dot strength meters, Proven/Partial/Missing badges, and direct CTAs to Learn, Quiz, or Code.
 - **Monaco Code Editor:** Embedded VS Code editor (`@monaco-editor/react`) for completing live code implementation challenges with instant static feedback.
 - **Evidence Drawer:** Traceable code viewer inspecting exact file paths, line numbers, and extracted signals.
 - **Learning Roadmap & Mission Verification:** Step-by-step curriculum with real technical links and repository verification submission.
+
+### Product Quality & Assessment Engine Pass
+- **Adaptive Assessment Engine & 2,520-Question Bank:** 105 validated questions per skill across all 24 skills (Beginner, Intermediate, Advanced, Expert) with streak-based dynamic difficulty leveling (streak $\ge 2$ correct promotes difficulty, errors demote).
+- **Mathematical Foundations:** Added Linear Algebra, Multivariate Calculus, Probability, and Optimization into skills and ML/AI career roles (`ml_engineer`, `data_scientist`, `ai_engineer`).
+- **Real GitHub Profile & Repository Explorer:** Live profile card (avatar, bio, total vs. analyzed public repos) and repository explorer tab with stars, forks, files scanned, and detected skills.
+- **Coverage Transparency Banner:** Clear statement ("Analyzed X of Y public repositories, excluding forks & non-code") ensuring complete honesty and reproducibility.
+- **High-Quality Curated Learning Resources:** 42 verified resources with official documentation and top technical English YouTube creators (3Blue1Brown, StatQuest, FreeCodeCamp, Traversy Media, sentdex).
 
 ---
 

@@ -8,6 +8,20 @@ export default {
   theme: {
     extend: {
       colors: {
+        theme: {
+          bg: 'var(--bg-main)',
+          surface: 'var(--bg-surface)',
+          'surface-secondary': 'var(--bg-surface-secondary)',
+          text: 'var(--text-primary)',
+          'text-secondary': 'var(--text-secondary)',
+          'text-muted': 'var(--text-muted)',
+          border: 'var(--border-main)',
+          'border-subtle': 'var(--border-subtle)',
+          'input-bg': 'var(--input-bg)',
+          'input-text': 'var(--input-text)',
+          placeholder: 'var(--input-placeholder)',
+          'code-bg': 'var(--code-bg)',
+        },
         brand: {
           50: '#f0fdf4',
           100: '#dcfce7',
