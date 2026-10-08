@@ -14,6 +14,7 @@ env/
 # Environment variables
 .env
 .env.*
+!.env.example
 
 # Database
 *.db
@@ -39,7 +40,7 @@ Thumbs.db
 # AI / model files
 *.gguf
 *.safetensors
-models/
+/models/
 
 # Temporary
 tmp/
