@@ -754,7 +754,9 @@ cd [project-directory]
 ### Environment Variables
 
 ```env
-[VARIABLE_NAME]=[value]
+GITHUB_TOKEN=[your_github_token]
+GEMMA_MODEL=[configured_model]
+DATABASE_URL=[database_url_if_required][VARIABLE_NAME]=[value]
 ```
 
 
@@ -762,12 +764,108 @@ cd [project-directory]
 ### Running the Project
 
 ```bash
-[run-command]
+Start Backend
+
+cd backend
+
+uvicorn app.main:app --reload
+
+Start Frontend
+
+In a separate terminal:
+
+cd frontend
+
+npm run dev
+
+Open the local development URL provided by Vite.
+
+
 ```
 
-### Usage
+### 📖 Usage
 
-[Explain the basic steps required to use the project.]
+Step 1
+
+Open ProofPath.
+
+Step 2
+
+Enter a public GitHub username.
+
+Step 3
+
+Select a target role.
+
+Example:
+
+Machine Learning Engineer
+
+Step 4
+
+Start the analysis.
+
+Step 5
+
+Review:
+
+Evidence Score
+
+Proven Skills
+
+Partially Proven Skills
+
+Unverified Claims
+
+Skill Gaps
+
+Repository Evidence
+
+Role Readiness
+
+Proof Missions
+
+Step 6
+
+Open individual skills to trace the assessment back to repositories and files.
+
+📊 Example Output
+
+ML Engineer
+
+Evidence Readiness
+61 / 100
+
+Strong Evidence
+
+✓ Python
+✓ PyTorch
+✓ Computer Vision
+✓ Git
+
+Partial Evidence
+
+◐ Docker
+◐ FastAPI
+◐ Testing
+
+Missing Evidence
+
+✕ MLOps
+✕ Cloud Deployment
+✕ Monitoring
+
+Recommended Proof Mission
+
+🚀 Deploy an existing ML model as a Dockerized FastAPI service.
+
+Expected evidence:
+
+✓ FastAPI endpoint
+✓ Dockerfile
+✓ Automated tests
+✓ Health check
+✓ Documentation
 
 ## Devpost Submission
 
@@ -788,24 +886,24 @@ All external components should be properly attributed and used according to thei
 
 ## Submission Checklist
 
-- [ ] Project title and description added
-- [ ] All team members listed
-- [ ] Problem clearly explained
-- [ ] Reason for choosing the problem explained
-- [ ] Solution and key features documented
-- [ ] Innovation and differentiation explained
-- [ ] Architecture included
-- [ ] Technical implementation documented
-- [ ] Work completed during the hackathon documented
-- [ ] Team contributions documented
-- [ ] Working application is functional
-- [ ] Live application link added where applicable
-- [ ] Demo video added
-- [ ] AI and open-source components documented
-- [ ] Setup and usage instructions tested
-- [ ] Challenges and learnings documented
-- [ ] Devpost submission completed
-- [ ] Devpost link added
-- [ ] Credits added
-- [ ] License added
-- [ ] Repository is organized and complete
+- [ x ] Project title and description added
+- [ x ] All team members listed
+- [ x ] Problem clearly explained
+- [ x ] Reason for choosing the problem explained
+- [ x ] Solution and key features documented
+- [ x ] Innovation and differentiation explained
+- [ x ] Architecture included
+- [ x ] Technical implementation documented
+- [ x ] Work completed during the hackathon documented
+- [ x ] Team contributions documented
+- [ x ] Working application is functional
+- [ x ] Live application link added where applicable
+- [ x ] Demo video added
+- [ x ] AI and open-source components documented
+- [ x ] Setup and usage instructions tested
+- [ x ] Challenges and learnings documented
+- [ x ] Devpost submission completed
+- [ x ] Devpost link added
+- [ x ] Credits added
+- [ x ] License added
+- [ x ] Repository is organized and complete
