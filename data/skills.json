@@ -558,6 +558,59 @@
         ".ipynb"
       ],
       "parent_skills": []
+    },
+    {
+      "name": "Mathematics",
+      "category": "Mathematical Foundations",
+      "signals": [
+        "np.dot",
+        "torch.matmul",
+        "scipy.linalg",
+        "scipy.optimize",
+        "gradient",
+        "matrix_mult",
+        "eigen",
+        "svd",
+        "derivatives",
+        "linear_algebra"
+      ],
+      "dependencies": [
+        "scipy",
+        "sympy",
+        "numpy",
+        "torch"
+      ],
+      "file_extensions": [
+        ".py",
+        ".ipynb"
+      ],
+      "parent_skills": []
+    },
+    {
+      "name": "Statistics",
+      "category": "Mathematical Foundations",
+      "signals": [
+        "scipy.stats",
+        "statsmodels",
+        "hypothesis_test",
+        "t_test",
+        "p_value",
+        "normal_distribution",
+        "bayes",
+        "correlation",
+        "covariance",
+        "confidence_interval"
+      ],
+      "dependencies": [
+        "scipy",
+        "statsmodels",
+        "numpy"
+      ],
+      "file_extensions": [
+        ".py",
+        ".ipynb"
+      ],
+      "parent_skills": []
     }
   ]
 }

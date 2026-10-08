@@ -21,7 +21,9 @@
         {"skill": "REST API", "weight": 1.0},
         {"skill": "Data Analysis", "weight": 1.0},
         {"skill": "Transformers", "weight": 1.0},
-        {"skill": "OpenCV", "weight": 1.0}
+        {"skill": "OpenCV", "weight": 1.0},
+        {"skill": "Mathematics", "weight": 1.0},
+        {"skill": "Statistics", "weight": 1.0}
       ]
     },
     {
@@ -54,7 +56,8 @@
         {"skill": "Pandas", "weight": 2.0},
         {"skill": "NumPy", "weight": 2.0},
         {"skill": "Data Analysis", "weight": 2.0},
-        {"skill": "SQL", "weight": 2.0}
+        {"skill": "SQL", "weight": 2.0},
+        {"skill": "Statistics", "weight": 2.0}
       ],
       "supporting_skills": [
         {"skill": "Scikit-learn", "weight": 1.0},
@@ -63,7 +66,8 @@
         {"skill": "PyTorch", "weight": 1.0},
         {"skill": "TensorFlow", "weight": 1.0},
         {"skill": "Git", "weight": 1.0},
-        {"skill": "Docker", "weight": 1.0}
+        {"skill": "Docker", "weight": 1.0},
+        {"skill": "Mathematics", "weight": 1.0}
       ]
     },
     {
@@ -105,7 +109,9 @@
         {"skill": "Git", "weight": 1.0},
         {"skill": "NumPy", "weight": 1.0},
         {"skill": "Pandas", "weight": 1.0},
-        {"skill": "Data Analysis", "weight": 1.0}
+        {"skill": "Data Analysis", "weight": 1.0},
+        {"skill": "Mathematics", "weight": 1.0},
+        {"skill": "Statistics", "weight": 1.0}
       ]
     },
     {
