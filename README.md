@@ -609,10 +609,10 @@ The MVP will prioritize a complete working flow over supporting a very large num
 
 ### Team Contributions
 
-- **Varun Shankar:** [Contribution]
-- **Dheeraj Kumar Reddy:** [Contribution]
-- **Vishnu Vardhan Reddy:** [Contribution]
-- **Mohith Kumar Naidu:** [Contribution]
+- **Varun Shankar:** Team leadership, project coordination, system integration, and overall architecture.
+- **Dheeraj Kumar Reddy:** Backend development, GitHub integration, repository analysis, and evidence extraction.
+- **Vishnu Vardhan Reddy:** AI/evidence reasoning, skill detection, role matching, and Proof Mission generation.
+- **Mohith Kumar Naidu:** Frontend development, dashboard, Evidence Explorer, visualization, testing, and presentation.
 
 ## Working Application
 
@@ -645,29 +645,108 @@ Receive personalized Proof Missions.
 
 ## Open Source and AI Usage
 
-### AI / Models
+🤖 Open Source and AI Usage
 
-- **[Model]:** [How it is used]
+AI / Models
+
+Gemma
+
+Gemma is used as the Evidence Reasoning Engine.
+
+ProofPath first extracts structured technical evidence from GitHub repositories. Gemma then reasons over this evidence to generate:
+
+Skill explanations
+
+Evidence strength
+
+Skill-gap analysis
+
+Career recommendations
+
+Proof Missions
+
+The model is not the source of truth for repository facts.
+
+Repository evidence comes first. AI reasoning comes second.
+
+
 
 ### Open Source Components
 
-- **[Library / Framework]:** [Purpose]
-- **[Dataset]:** [Purpose]
-- **[API / Service]:** [Purpose]
+React
 
-[Include relevant licenses, attribution, and acknowledgements for external components.]
+Used to build the interactive ProofPath dashboard.
+
+FastAPI
+
+Used to provide backend APIs and connect the frontend with the analysis engine.
+
+GitHub APIs
+
+Used to retrieve publicly accessible repository information.
+
+Tree-sitter / Language Parsers
+
+Used where applicable for source-code analysis.
+
+Python AST
+
+Used for Python source-code analysis where applicable.
+
+Tailwind CSS
+
+Used for frontend styling and dashboard design.
+
+All external libraries, models, APIs, datasets, and components should be properly attributed and used according to their licenses.
+
+
 
 ## Setup and Usage
-
 ### Prerequisites
 
-- [Requirement]
-- [Requirement]
+Python 3.10+
+
+Node.js 18+
+
+npm
+
+Git
+
+GitHub API access/token where required
+
+Required AI model/runtime
 
 ### Installation
 
 ```bash
-git clone [repository-url]
+git clone https://github.com/Sunny-Dheeraj/hacktoberfest-hack-day-coimbatore-x-init-club-and-idea-club
+
+cd proofpath
+Backend
+
+cd backend
+
+python -m venv .venv
+
+Activate the environment:
+
+Linux / macOS
+
+source .venv/bin/activate
+
+Windows
+
+.venv\Scripts\activate
+
+Install dependencies:
+
+pip install -r requirements.txt
+
+Frontend
+
+cd ../frontend
+
+npm installgit clone [repository-url]
 cd [project-directory]
 [installation-command]
 ```
@@ -692,19 +771,20 @@ cd [project-directory]
 
 ## Devpost Submission
 
-**Devpost Project:** [Devpost Project URL]
+**Devpost Project:** https://dev.to/varun_2803/proofpath-53km
 
-[Add the link to the team's Devpost submission. Ensure the Devpost project page is complete and contains the required project information, links, media, and team details.]
 
 ## Credits and License
 
 ### Credits
 
-[Credit libraries, frameworks, datasets, models, APIs, contributors, and other external resources used.]
+ProofPath uses open-source frameworks, libraries, APIs, code-analysis technologies, and AI models.
+
+All external components should be properly attributed and used according to their respective licenses.
 
 ### License
 
-[License name and/or link.]
+[ADD PROJECT LICENSE — e.g. MIT]
 
 ## Submission Checklist
 
