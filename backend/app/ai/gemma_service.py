@@ -6,6 +6,9 @@ import json
 import logging
 from typing import List, Dict, Any, Optional
 import httpx
+from dotenv import load_dotenv
+
+load_dotenv()
 
 from app.models.career import (
     CareerRole,
@@ -34,10 +37,14 @@ class GemmaService:
         api_key: Optional[str] = None,
         timeout: float = 30.0,
     ):
-        self.project_id = project_id or os.getenv("GOOGLE_CLOUD_PROJECT", "")
-        self.location = location or os.getenv("GOOGLE_CLOUD_LOCATION", "global")
-        self.model_name = model_name or os.getenv("GEMMA_MODEL", "gemma-4-26b-a4b-it-maas")
-        self.api_key = api_key or os.getenv("GEMMA_API_KEY") or os.getenv("GOOGLE_GENAI_API_KEY") or os.getenv("GOOGLE_CLOUD_API_KEY", "")
+        self.project_id = os.getenv("GOOGLE_CLOUD_PROJECT", "") if project_id is None else project_id
+        self.location = os.getenv("GOOGLE_CLOUD_LOCATION", "global") if location is None else location
+        self.model_name = os.getenv("GEMMA_MODEL", "gemma-4-26b-a4b-it-maas") if model_name is None else model_name
+        self.api_key = (
+            (os.getenv("GEMMA_API_KEY") or os.getenv("GOOGLE_GENAI_API_KEY") or os.getenv("GOOGLE_CLOUD_API_KEY", ""))
+            if api_key is None
+            else api_key
+        )
         self.timeout = float(os.getenv("GEMMA_TIMEOUT", str(timeout)))
 
     def is_configured(self) -> bool:
@@ -97,8 +104,9 @@ class GemmaService:
             if self.api_key:
                 url = (
                     f"https://generativelanguage.googleapis.com/v1beta/models/"
-                    f"{self.model_name}:generateContent?key={self.api_key}"
+                    f"{self.model_name}:generateContent"
                 )
+                headers = {"x-goog-api-key": self.api_key}
                 payload = {
                     "contents": [{"parts": [{"text": prompt}]}],
                     "generationConfig": {
@@ -106,7 +114,7 @@ class GemmaService:
                         "response_mime_type": "application/json",
                     },
                 }
-                response = await client.post(url, json=payload)
+                response = await client.post(url, json=payload, headers=headers)
                 response.raise_for_status()
                 data = response.json()
                 # Extract text from response structure
