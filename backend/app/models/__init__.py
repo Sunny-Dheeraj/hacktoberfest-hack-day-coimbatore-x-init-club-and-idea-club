@@ -19,6 +19,21 @@ from app.models.career import (
     RoleAnalysis,
     CareerAnalysis,
 )
+from app.models.progress import (
+    LearningResource,
+    LearningResourceType,
+    KnowledgeQuestion,
+    CodeReasoningQuestion,
+    CodeChallenge,
+    ChallengeCriterion,
+    ChallengeCriterionResult,
+    PracticalTask,
+    SkillConfidence,
+    NextBestAction,
+    EvaluationStatus,
+    VerificationStatus,
+    ChallengeDifficulty,
+)
 
 __all__ = [
     "EvidenceStatus",
@@ -36,4 +51,17 @@ __all__ = [
     "AIInsight",
     "RoleAnalysis",
     "CareerAnalysis",
+    "LearningResource",
+    "LearningResourceType",
+    "KnowledgeQuestion",
+    "CodeReasoningQuestion",
+    "CodeChallenge",
+    "ChallengeCriterion",
+    "ChallengeCriterionResult",
+    "PracticalTask",
+    "SkillConfidence",
+    "NextBestAction",
+    "EvaluationStatus",
+    "VerificationStatus",
+    "ChallengeDifficulty",
 ]

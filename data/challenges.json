@@ -1,0 +1,420 @@
+{
+  "skills_assessment_data": {
+    "Python": {
+      "knowledge": [
+        {
+          "id": "py-k-1",
+          "question": "What is the primary function of a Python decorator?",
+          "options": [
+            "To allocate memory dynamically on the heap",
+            "To modify or extend the behavior of a function or class without altering its source code",
+            "To compile Python bytecode into native C binaries",
+            "To enforce strict static type checking at runtime"
+          ],
+          "correct_index": 1,
+          "explanation": "A decorator takes another function as an argument, adds functionality, and returns an altered function without modifying the original code."
+        },
+        {
+          "id": "py-k-2",
+          "question": "Which Python construct is used to guarantee that resources like file descriptors are closed safely even if exceptions occur?",
+          "options": [
+            "lambda expressions",
+            "Context manager using the 'with' statement",
+            "global keyword",
+            "sys.exit()"
+          ],
+          "correct_index": 1,
+          "explanation": "The 'with' statement leverages the context management protocol (__enter__ and __exit__) to ensure safe resource disposal."
+        }
+      ],
+      "code_reasoning": [
+        {
+          "id": "py-r-1",
+          "language": "python",
+          "snippet": "numbers = [1, 2, 3, 4]\nresult = [x * 2 for x in numbers if x % 2 == 0]\nprint(result)",
+          "question": "What will be printed when this script executes?",
+          "options": [
+            "[2, 4, 6, 8]",
+            "[4, 8]",
+            "[2, 6]",
+            "[1, 3]"
+          ],
+          "correct_index": 1,
+          "explanation": "The list comprehension filters numbers where x % 2 == 0 (which are 2 and 4) and multiplies each by 2, yielding [4, 8]."
+        }
+      ],
+      "code_challenge": {
+        "id": "py-c-is-even",
+        "title": "Implement an Even-Number Checker",
+        "language": "python",
+        "difficulty": "beginner",
+        "description": "Implement the function `is_even(n)` that returns True if the integer `n` is even, and False otherwise.",
+        "starter_code": "def is_even(n):\n    # Return True if n is even, False otherwise\n    pass\n",
+        "expected_behavior": [
+          "is_even(4) == True",
+          "is_even(7) == False",
+          "is_even(0) == True"
+        ],
+        "criteria": [
+          {"name": "function_defined", "description": "Defines function named 'is_even' with parameter 'n'"},
+          {"name": "returns_boolean_condition", "description": "Returns boolean result using modulo operator (%) or bitwise AND"},
+          {"name": "handles_even_odd", "description": "Correctly checks remainder with 2"}
+        ]
+      },
+      "mission": {
+        "id": "py-m-cli",
+        "title": "Build a Modular Python CLI Utility with Testing",
+        "difficulty": "intermediate",
+        "description": "Create a standalone Python command-line utility with modular structure and unit tests.",
+        "requirements": [
+          "Create a main entry point file (main.py or cli.py)",
+          "Implement at least two custom functions or a class",
+          "Include a test suite (test_*.py) with automated unit tests",
+          "Use type hints and a virtual environment requirements.txt"
+        ],
+        "expected_artifacts": ["main.py", "requirements.txt", "test_*.py"],
+        "verification_rules": {
+          "required_files": ["*.py", "requirements.txt"],
+          "required_signals": ["def", "import"],
+          "min_files": 2
+        }
+      }
+    },
+    "Docker": {
+      "knowledge": [
+        {
+          "id": "dock-k-1",
+          "question": "What is the primary difference between a Docker image and a Docker container?",
+          "options": [
+            "An image runs on Windows while containers only run on Linux",
+            "An image is an immutable template with instructions; a container is a running instance of that image",
+            "An image is a network protocol; a container is a disk partition",
+            "A container is a backup file of a virtual machine"
+          ],
+          "correct_index": 1,
+          "explanation": "A Docker image is a read-only blueprint, and a container is an isolated, runnable execution instance of an image."
+        }
+      ],
+      "code_reasoning": [
+        {
+          "id": "dock-r-1",
+          "language": "dockerfile",
+          "snippet": "FROM python:3.10-slim\nWORKDIR /app\nCOPY requirements.txt .\nRUN pip install -r requirements.txt\nCOPY . .\nEXPOSE 8000\nCMD [\"uvicorn\", \"app.main:app\", \"--host\", \"0.0.0.0\", \"--port\", \"8000\"]",
+          "question": "Why is 'COPY requirements.txt .' placed before 'COPY . .' in this Dockerfile?",
+          "options": [
+            "It is required by Docker syntax conventions",
+            "To take advantage of Docker build layer caching and prevent re-installing dependencies on every source code edit",
+            "Because requirements.txt cannot be copied inside the root directory",
+            "To ensure the container boots in background daemon mode"
+          ],
+          "correct_index": 1,
+          "explanation": "Separating requirement installation caches the dependency layer so dependencies aren't re-downloaded when only application code changes."
+        }
+      ],
+      "code_challenge": {
+        "id": "dock-c-dockerfile",
+        "title": "Write a Minimal Production Dockerfile",
+        "language": "dockerfile",
+        "difficulty": "beginner",
+        "description": "Write a Dockerfile that starts FROM python:3.10-slim, sets WORKDIR to /app, copies files, and defines CMD.",
+        "starter_code": "# Use python:3.10-slim as base\nFROM python:3.10-slim\n# Set working directory to /app\nWORKDIR /app\n# Copy current directory\nCOPY . .\n# Set default command\nCMD [\"python\", \"main.py\"]\n",
+        "expected_behavior": [
+          "Uses valid base image with FROM",
+          "Sets WORKDIR",
+          "Specifies COPY and CMD"
+        ],
+        "criteria": [
+          {"name": "has_from", "description": "Includes FROM instruction specifying base image"},
+          {"name": "has_workdir", "description": "Includes WORKDIR instruction"},
+          {"name": "has_cmd", "description": "Includes CMD or ENTRYPOINT instruction"}
+        ]
+      },
+      "mission": {
+        "id": "dock-m-containerize",
+        "title": "Containerize a Microservice with Dockerfile & Health Check",
+        "difficulty": "intermediate",
+        "description": "Build and document a reproducible Docker container for a web service.",
+        "requirements": [
+          "Create a Dockerfile in repository root",
+          "Use a minimal official base image",
+          "Set non-root user or proper WORKDIR",
+          "Expose the listening port and configure entrypoint"
+        ],
+        "expected_artifacts": ["Dockerfile"],
+        "verification_rules": {
+          "required_files": ["Dockerfile"],
+          "required_signals": ["docker_instruction_FROM", "docker_instruction_CMD"],
+          "min_files": 1
+        }
+      }
+    },
+    "SQL": {
+      "knowledge": [
+        {
+          "id": "sql-k-1",
+          "question": "What is the key difference between an INNER JOIN and a LEFT JOIN?",
+          "options": [
+            "INNER JOIN sorts by primary key while LEFT JOIN does not",
+            "INNER JOIN returns only rows with matches in both tables; LEFT JOIN returns all rows from the left table plus matched rows from the right",
+            "LEFT JOIN can only be used on indexed columns",
+            "INNER JOIN is deprecated in modern SQL databases"
+          ],
+          "correct_index": 1,
+          "explanation": "INNER JOIN requires matches on both sides of the predicate; LEFT JOIN preserves all records from the left table with NULL fills for unmatched right-side rows."
+        }
+      ],
+      "code_reasoning": [
+        {
+          "id": "sql-r-1",
+          "language": "sql",
+          "snippet": "SELECT department, COUNT(*) AS emp_count\nFROM employees\nGROUP BY department\nHAVING COUNT(*) > 5;",
+          "question": "What does this SQL query retrieve?",
+          "options": [
+            "All employees who joined in the last 5 years",
+            "Departments that have more than 5 employees along with the employee count",
+            "The top 5 departments ordered alphabetically",
+            "All departments with a salary budget exceeding 5 million"
+          ],
+          "correct_index": 1,
+          "explanation": "The query groups employees by department and uses the HAVING clause to filter groups where the row count is strictly greater than 5."
+        }
+      ],
+      "code_challenge": {
+        "id": "sql-c-filter-orders",
+        "title": "Write a Filtered Aggregation Query",
+        "language": "sql",
+        "difficulty": "beginner",
+        "description": "Write a SQL query to SELECT user_id and SUM(amount) AS total_spent FROM orders GROUP BY user_id HAVING total_spent > 100.",
+        "starter_code": "-- Write query to select user_id, SUM(amount) AS total_spent\n-- from orders table where total_spent > 100\nSELECT user_id, SUM(amount) AS total_spent\nFROM orders\nGROUP BY user_id\nHAVING SUM(amount) > 100;\n",
+        "expected_behavior": [
+          "Selects user_id and aggregate sum",
+          "Groups by user_id",
+          "Filters groups with HAVING"
+        ],
+        "criteria": [
+          {"name": "has_select", "description": "Contains SELECT statement with aggregation"},
+          {"name": "has_group_by", "description": "Contains GROUP BY clause"},
+          {"name": "has_having", "description": "Contains HAVING clause or proper filtering"}
+        ]
+      },
+      "mission": {
+        "id": "sql-m-analytics",
+        "title": "Design a Relational Schema with Analytical Queries",
+        "difficulty": "intermediate",
+        "description": "Create a database schema migration and analytical reporting queries.",
+        "requirements": [
+          "Create SQL schema definitions (CREATE TABLE) with foreign keys",
+          "Write multi-table JOIN queries with aggregation functions",
+          "Include indexing statements (CREATE INDEX) for query optimization"
+        ],
+        "expected_artifacts": ["schema.sql"],
+        "verification_rules": {
+          "required_files": ["*.sql"],
+          "required_signals": ["SELECT", "JOIN", "CREATE TABLE"],
+          "min_files": 1
+        }
+      }
+    },
+    "FastAPI": {
+      "knowledge": [
+        {
+          "id": "fast-k-1",
+          "question": "How does FastAPI achieve high performance and automatic interactive API documentation?",
+          "options": [
+            "By compiling Python scripts into C extensions using Cython",
+            "By utilizing Starlette, Uvicorn, and Pydantic models with OpenAPI/JSON Schema integration",
+            "By executing synchronous threads in a WSGI container",
+            "By eliminating HTTP parsing overhead using WebSockets"
+          ],
+          "correct_index": 1,
+          "explanation": "FastAPI is built on Starlette for async web routing and Pydantic for data validation, automatically generating OpenAPI specs and Swagger docs."
+        }
+      ],
+      "code_reasoning": [
+        {
+          "id": "fast-r-1",
+          "language": "python",
+          "snippet": "from fastapi import FastAPI, Depends\napp = FastAPI()\n\ndef get_db():\n    db = 'session'\n    try:\n        yield db\n    finally:\n        pass\n\n@app.get('/items')\ndef list_items(db=Depends(get_db)):\n    return {'status': 'ok'}",
+          "question": "What pattern is being demonstrated by 'Depends(get_db)' in list_items?",
+          "options": [
+            "Asynchronous monkey-patching",
+            "Dependency Injection pattern for database session lifecycle",
+            "Global variable caching",
+            "Middleware interception"
+          ],
+          "correct_index": 1,
+          "explanation": "FastAPI's Depends system provides hierarchical Dependency Injection, allowing handlers to receive resources like database sessions with automatic cleanup."
+        }
+      ],
+      "code_challenge": {
+        "id": "fast-c-route",
+        "title": "Create a FastAPI Health Route",
+        "language": "python",
+        "difficulty": "beginner",
+        "description": "Define a FastAPI app instance and create a GET route at '/health' returning a dict with status 'healthy'.",
+        "starter_code": "from fastapi import FastAPI\n\napp = FastAPI()\n\n# Create a GET route at /health\n@app.get(\"/health\")\ndef health_check():\n    return {\"status\": \"healthy\"}\n",
+        "expected_behavior": [
+          "Instantiates FastAPI()",
+          "Decorates handler with @app.get('/health')",
+          "Returns dictionary with status key"
+        ],
+        "criteria": [
+          {"name": "app_instantiated", "description": "Instantiates FastAPI application object"},
+          {"name": "route_decorator", "description": "Defines @app.get route decorator"},
+          {"name": "returns_dict", "description": "Returns dictionary response"}
+        ]
+      },
+      "mission": {
+        "id": "fast-m-api",
+        "title": "Build a Tested REST API with FastAPI and Pydantic",
+        "difficulty": "intermediate",
+        "description": "Develop a structured REST API with Pydantic request models, routers, and test endpoints.",
+        "requirements": [
+          "Define APIRouter endpoints with HTTP GET and POST",
+          "Use Pydantic BaseModel for input validation",
+          "Implement unit tests using TestClient"
+        ],
+        "expected_artifacts": ["main.py", "requirements.txt"],
+        "verification_rules": {
+          "required_files": ["*.py", "requirements.txt"],
+          "required_signals": ["FastAPI", "BaseModel", "APIRouter"],
+          "min_files": 1
+        }
+      }
+    },
+    "React": {
+      "knowledge": [
+        {
+          "id": "react-k-1",
+          "question": "What is the purpose of the dependency array in React's useEffect hook?",
+          "options": [
+            "To declare external npm packages the component imports",
+            "To specify which state or prop variables trigger the effect to re-run when changed",
+            "To bind methods to the component's prototype",
+            "To compile JSX into virtual DOM elements"
+          ],
+          "correct_index": 1,
+          "explanation": "The dependency array informs React when to re-execute the effect. If values in the array change between renders, the effect runs again."
+        }
+      ],
+      "code_reasoning": [
+        {
+          "id": "react-r-1",
+          "language": "javascript",
+          "snippet": "function Counter() {\n  const [count, setCount] = useState(0);\n  function handleClick() {\n    setCount(prev => prev + 1);\n  }\n  return <button onClick={handleClick}>{count}</button>;\n}",
+          "question": "Why is 'setCount(prev => prev + 1)' preferred over 'setCount(count + 1)'?",
+          "options": [
+            "Because arrow functions execute faster in V8 engine",
+            "Because functional state updates guarantee operating on the latest state even during batched asynchronous updates",
+            "Because count is a constant that cannot be referenced directly",
+            "Because it prevents browser memory leaks"
+          ],
+          "correct_index": 1,
+          "explanation": "Passing a function to the state setter accesses the most up-to-date state value, avoiding stale closures during batched renders."
+        }
+      ],
+      "code_challenge": {
+        "id": "react-c-button",
+        "title": "Implement a Functional React Button Component",
+        "language": "javascript",
+        "difficulty": "beginner",
+        "description": "Write a React component `ActionButton` that receives props `label` and `onClick` and renders a button element.",
+        "starter_code": "import React from 'react';\n\nexport function ActionButton({ label, onClick }) {\n  return (\n    <button onClick={onClick} className=\"btn\">\n      {label}\n    </button>\n  );\n}\n",
+        "expected_behavior": [
+          "Exports functional React component",
+          "Receives props",
+          "Returns JSX button"
+        ],
+        "criteria": [
+          {"name": "component_defined", "description": "Defines functional component with props"},
+          {"name": "returns_jsx", "description": "Returns JSX button element"},
+          {"name": "binds_event", "description": "Binds onClick event handler"}
+        ]
+      },
+      "mission": {
+        "id": "react-m-dashboard",
+        "title": "Build an Interactive React Component with State and Effects",
+        "difficulty": "intermediate",
+        "description": "Create a reusable React frontend application utilizing hooks, props, and modern JSX.",
+        "requirements": [
+          "Use React functional components and hooks (useState, useEffect)",
+          "Implement component composition and props passing",
+          "Manage asynchronous API fetching or state updates"
+        ],
+        "expected_artifacts": ["App.tsx", "package.json"],
+        "verification_rules": {
+          "required_files": ["*.tsx", "*.jsx", "package.json"],
+          "required_signals": ["useState", "react_component"],
+          "min_files": 1
+        }
+      }
+    },
+    "PyTorch": {
+      "knowledge": [
+        {
+          "id": "torch-k-1",
+          "question": "What is the primary role of PyTorch's Autograd engine?",
+          "options": [
+            "To automatically distribute tensor computations across multiple nodes",
+            "To automatically compute gradients of tensor operations for backpropagation",
+            "To automatically download pre-trained weights from Hugging Face",
+            "To convert Python functions into TorchScript C++ binaries"
+          ],
+          "correct_index": 1,
+          "explanation": "Autograd tracks operations on tensors with requires_grad=True, constructing a directed acyclic graph to calculate derivatives via reverse-mode automatic differentiation."
+        }
+      ],
+      "code_reasoning": [
+        {
+          "id": "torch-r-1",
+          "language": "python",
+          "snippet": "optimizer.zero_grad()\noutputs = model(inputs)\nloss = criterion(outputs, targets)\nloss.backward()\noptimizer.step()",
+          "question": "Why must 'optimizer.zero_grad()' be called before 'loss.backward()' in a typical training loop?",
+          "options": [
+            "To reset the GPU cache memory to zero",
+            "Because PyTorch accumulates gradients by default rather than overwriting them on each pass",
+            "To initialize the neural network weights to zero",
+            "To terminate the current epoch cleanly"
+          ],
+          "correct_index": 1,
+          "explanation": "In PyTorch, gradients accumulate in .grad buffers with every backward() call, so zero_grad() must be invoked to avoid adding new gradients to previous batches."
+        }
+      ],
+      "code_challenge": {
+        "id": "torch-c-module",
+        "title": "Define a PyTorch Linear Classifier Module",
+        "language": "python",
+        "difficulty": "intermediate",
+        "description": "Create a class `LinearClassifier` inheriting from `torch.nn.Module`, initializing `self.linear = nn.Linear(in_features, out_features)` and defining `forward(self, x)`.",
+        "starter_code": "import torch\nimport torch.nn as nn\n\nclass LinearClassifier(nn.Module):\n    def __init__(self, in_features, out_features):\n        super().__init__()\n        self.linear = nn.Linear(in_features, out_features)\n        \n    def forward(self, x):\n        return self.linear(x)\n",
+        "expected_behavior": [
+          "Inherits from nn.Module",
+          "Calls super().__init__()",
+          "Implements forward method"
+        ],
+        "criteria": [
+          {"name": "inherits_module", "description": "Inherits from torch.nn.Module"},
+          {"name": "defines_init", "description": "Initializes layers in __init__"},
+          {"name": "defines_forward", "description": "Defines forward computation pass"}
+        ]
+      },
+      "mission": {
+        "id": "torch-m-pipeline",
+        "title": "Build a PyTorch Model Training & Evaluation Pipeline",
+        "difficulty": "advanced",
+        "description": "Implement a full PyTorch deep learning script with custom Module, DataLoader, loss calculation, and optimization step.",
+        "requirements": [
+          "Define a neural network class subclassing nn.Module",
+          "Implement a training loop calling loss.backward() and optimizer.step()",
+          "Save model weights or evaluate test loss"
+        ],
+        "expected_artifacts": ["train.py", "requirements.txt"],
+        "verification_rules": {
+          "required_files": ["*.py", "requirements.txt"],
+          "required_signals": ["torch.nn.Module", "loss.backward", "optimizer.step"],
+          "min_files": 1
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,204 @@
+{
+  "resources": [
+    {
+      "id": "py-doc-official",
+      "skill": "Python",
+      "title": "Official Python 3 Documentation",
+      "description": "Comprehensive tutorial and language reference covering core syntax, data structures, and standard library.",
+      "type": "documentation",
+      "url": "https://docs.python.org/3/tutorial/",
+      "difficulty": "beginner",
+      "estimated_time": "3 hours"
+    },
+    {
+      "id": "py-deep-dive",
+      "skill": "Python",
+      "title": "Real Python: Intermediate & Advanced Python Guides",
+      "description": "Practical guides on decorators, generators, context managers, and async programming.",
+      "type": "guide",
+      "url": "https://realpython.com/",
+      "difficulty": "intermediate",
+      "estimated_time": "4 hours"
+    },
+    {
+      "id": "docker-get-started",
+      "skill": "Docker",
+      "title": "Docker Official Documentation: Getting Started",
+      "description": "Step-by-step guide on writing Dockerfiles, building container images, and running containers.",
+      "type": "documentation",
+      "url": "https://docs.docker.com/get-started/",
+      "difficulty": "beginner",
+      "estimated_time": "2 hours"
+    },
+    {
+      "id": "docker-compose-guide",
+      "skill": "Docker",
+      "title": "Multi-Container Applications with Docker Compose",
+      "description": "How to define and run multi-service Docker applications using docker-compose.yml.",
+      "type": "guide",
+      "url": "https://docs.docker.com/compose/",
+      "difficulty": "intermediate",
+      "estimated_time": "2 hours"
+    },
+    {
+      "id": "pytorch-tutorials",
+      "skill": "PyTorch",
+      "title": "PyTorch Official Deep Learning Tutorials",
+      "description": "Official tutorials covering Tensors, Autograd, neural network modules (torch.nn), and custom training loops.",
+      "type": "tutorial",
+      "url": "https://pytorch.org/tutorials/beginner/basics/intro.html",
+      "difficulty": "intermediate",
+      "estimated_time": "5 hours"
+    },
+    {
+      "id": "sql-w3-tutorial",
+      "skill": "SQL",
+      "title": "SQL Tutorial & Reference",
+      "description": "Interactive guide covering SELECT, WHERE, JOINs (INNER, LEFT, RIGHT), GROUP BY, aggregations, and subqueries.",
+      "type": "tutorial",
+      "url": "https://www.w3schools.com/sql/",
+      "difficulty": "beginner",
+      "estimated_time": "3 hours"
+    },
+    {
+      "id": "fastapi-tutorial",
+      "skill": "FastAPI",
+      "title": "FastAPI Tutorial - User Guide",
+      "description": "Comprehensive guide for building modern REST APIs with Python, Pydantic, dependency injection, and async routes.",
+      "type": "documentation",
+      "url": "https://fastapi.tiangolo.com/tutorial/",
+      "difficulty": "intermediate",
+      "estimated_time": "3 hours"
+    },
+    {
+      "id": "react-dev-learn",
+      "skill": "React",
+      "title": "React.dev: Quick Start & Hooks Guide",
+      "description": "Modern React guide covering JSX, component state (useState), side-effects (useEffect), and custom hooks.",
+      "type": "documentation",
+      "url": "https://react.dev/learn",
+      "difficulty": "beginner",
+      "estimated_time": "4 hours"
+    },
+    {
+      "id": "ts-handbook",
+      "skill": "TypeScript",
+      "title": "The TypeScript Handbook",
+      "description": "Essential handbook covering static types, interfaces, generics, type narrowing, and utility types.",
+      "type": "guide",
+      "url": "https://www.typescriptlang.org/docs/handbook/intro.html",
+      "difficulty": "intermediate",
+      "estimated_time": "4 hours"
+    },
+    {
+      "id": "nodejs-guides",
+      "skill": "Node.js",
+      "title": "Node.js Developer Guides",
+      "description": "Official guides explaining event loops, asynchronous I/O, file system modules, and HTTP servers.",
+      "type": "documentation",
+      "url": "https://nodejs.org/en/docs/guides",
+      "difficulty": "intermediate",
+      "estimated_time": "3 hours"
+    },
+    {
+      "id": "sklearn-guide",
+      "skill": "Scikit-learn",
+      "title": "Scikit-learn User Guide",
+      "description": "Supervised and unsupervised learning with scikit-learn: pipelines, cross-validation, estimators, and metrics.",
+      "type": "guide",
+      "url": "https://scikit-learn.org/stable/user_guide.html",
+      "difficulty": "intermediate",
+      "estimated_time": "4 hours"
+    },
+    {
+      "id": "pandas-getting-started",
+      "skill": "Pandas",
+      "title": "Pandas Getting Started Tutorials",
+      "description": "Learn DataFrame manipulation, filtering, grouping, aggregation, merging, and timeseries data cleaning.",
+      "type": "tutorial",
+      "url": "https://pandas.pydata.org/docs/getting_started/index.html",
+      "difficulty": "beginner",
+      "estimated_time": "3 hours"
+    },
+    {
+      "id": "numpy-quickstart",
+      "skill": "NumPy",
+      "title": "NumPy Quickstart Tutorial",
+      "description": "Multidimensional arrays, vectorized operations, matrix math, broadcasting, and numerical computation.",
+      "type": "tutorial",
+      "url": "https://numpy.org/doc/stable/user/quickstart.html",
+      "difficulty": "beginner",
+      "estimated_time": "2 hours"
+    },
+    {
+      "id": "git-progit",
+      "skill": "Git",
+      "title": "Pro Git Book (Free Online)",
+      "description": "Master Git branching, merging, remotes, rebase, and GitHub collaboration workflows.",
+      "type": "guide",
+      "url": "https://git-scm.com/book/en/v2",
+      "difficulty": "beginner",
+      "estimated_time": "3 hours"
+    },
+    {
+      "id": "transformers-course",
+      "skill": "Transformers",
+      "title": "Hugging Face NLP Course",
+      "description": "Learn Transformer architectures, tokenizers, pipelines, model fine-tuning, and Hugging Face Hub usage.",
+      "type": "course",
+      "url": "https://huggingface.co/learn/nlp-course/",
+      "difficulty": "advanced",
+      "estimated_time": "6 hours"
+    },
+    {
+      "id": "opencv-py-tutorials",
+      "skill": "OpenCV",
+      "title": "OpenCV-Python Tutorials",
+      "description": "Image processing, filtering, contours, video capture, object detection, and feature matching.",
+      "type": "tutorial",
+      "url": "https://docs.opencv.org/4.x/d6/d00/tutorial_py_root.html",
+      "difficulty": "intermediate",
+      "estimated_time": "4 hours"
+    },
+    {
+      "id": "rest-api-guide",
+      "skill": "REST API",
+      "title": "REST API Design Guidelines",
+      "description": "Best practices for designing HTTP endpoints, status codes, payload formatting, idempotency, and auth headers.",
+      "type": "guide",
+      "url": "https://restfulapi.net/",
+      "difficulty": "beginner",
+      "estimated_time": "2 hours"
+    },
+    {
+      "id": "ml-crash-course",
+      "skill": "Machine Learning",
+      "title": "Google Machine Learning Crash Course",
+      "description": "Foundational ML course covering regression, classification, loss functions, gradient descent, and validation.",
+      "type": "course",
+      "url": "https://developers.google.com/machine-learning/crash-course",
+      "difficulty": "beginner",
+      "estimated_time": "8 hours"
+    },
+    {
+      "id": "deeplearning-book",
+      "skill": "Deep Learning",
+      "title": "Deep Learning Specialization Materials",
+      "description": "Neural network architectures, activations, backpropagation, CNNs, RNNs, and attention mechanisms.",
+      "type": "course",
+      "url": "https://www.deeplearning.ai/",
+      "difficulty": "intermediate",
+      "estimated_time": "8 hours"
+    },
+    {
+      "id": "data-analysis-kaggle",
+      "skill": "Data Analysis",
+      "title": "Kaggle Exploratory Data Analysis Course",
+      "description": "Hands-on data exploration, feature analysis, missing data handling, and visual storytelling.",
+      "type": "tutorial",
+      "url": "https://www.kaggle.com/learn",
+      "difficulty": "beginner",
+      "estimated_time": "3 hours"
+    }
+  ]
+}

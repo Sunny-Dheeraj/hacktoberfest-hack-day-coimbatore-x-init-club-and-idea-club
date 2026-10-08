@@ -11,6 +11,19 @@ from app.schemas.career import (
     RoleSummaryResponse,
     RolesListResponse,
 )
+from app.schemas.progress import (
+    FullSkillAssessment,
+    QuizSubmissionRequest,
+    QuizQuestionResult,
+    QuizResultResponse,
+    CodeChallengeSubmissionRequest,
+    CodeChallengeResultResponse,
+    TaskVerificationRequest,
+    TaskCriterionResult,
+    TaskVerificationResponse,
+    LearningPathResponse,
+    UserProgressResponse,
+)
 
 __all__ = [
     "AnalyzeRequest",
@@ -20,4 +33,15 @@ __all__ = [
     "CareerAnalysisResponse",
     "RoleSummaryResponse",
     "RolesListResponse",
+    "FullSkillAssessment",
+    "QuizSubmissionRequest",
+    "QuizQuestionResult",
+    "QuizResultResponse",
+    "CodeChallengeSubmissionRequest",
+    "CodeChallengeResultResponse",
+    "TaskVerificationRequest",
+    "TaskCriterionResult",
+    "TaskVerificationResponse",
+    "LearningPathResponse",
+    "UserProgressResponse",
 ]
